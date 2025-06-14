@@ -43,6 +43,7 @@ export const initialState = {
   },
   validation: {
     errors: {},
+    touched: {},
     isValid: true
   }
 };
