@@ -1,30 +1,41 @@
-
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useWizard } from '../../hooks/useWizard';
 
+const steps = [
+  { title: 'Welcome' },
+  { title: 'Server Config' },
+  { title: 'Database' },
+  { title: 'Data Management' },
+  { title: 'Sample Data' },
+  { title: 'Performance' },
+  { title: 'Services' },
+  { title: 'Review' },
+  { title: 'Complete' }
+];
+
 function Navigation() {
   const { state, dispatch } = useWizard();
-
-  const steps = [
-    { title: 'Welcome' },
-    { title: 'Server Config' },
-    { title: 'Database' },
-    { title: 'Data Management' },
-    { title: 'Sample Data' },
-    { title: 'Performance' },
-    { title: 'Services' },
-    { title: 'Review' },
-    { title: 'Complete' }
-  ];
+  const hasErrors = Object.keys(state.validation.errors).length > 0;
+  const hasTouchedErrors = Object.keys(state.validation.errors).some(
+    field => state.validation.touched[field]
+  );
 
   const canGoNext = state.currentStep < state.totalSteps;
   const canGoPrev = state.currentStep > 1;
 
+  const handleNext = () => {
+    dispatch({ type: 'NEXT_STEP' });
+  };
+
+  const handlePrev = () => {
+    dispatch({ type: 'PREV_STEP' });
+  };
+
   return (
     <div className="flex justify-between items-center pt-6 border-t">
       <button
-        onClick={() => dispatch({ type: 'PREV_STEP' })}
+        onClick={handlePrev}
         disabled={!canGoPrev}
         className={`flex items-center px-4 py-2 rounded-md transition-colors ${
           canGoPrev 
@@ -36,12 +47,19 @@ function Navigation() {
         Previous
       </button>
 
-      <div className="text-sm text-gray-600">
-        {steps[state.currentStep - 1]?.title}
+      <div className="text-center">
+        <div className="text-sm text-gray-600">
+          {steps[state.currentStep - 1]?.title}
+        </div>
+        {hasErrors && hasTouchedErrors && (
+          <p className="text-xs text-red-600 mt-1">
+            Please fix errors before proceeding
+          </p>
+        )}
       </div>
 
       <button
-        onClick={() => dispatch({ type: 'NEXT_STEP' })}
+        onClick={handleNext}
         disabled={!canGoNext}
         className={`flex items-center px-4 py-2 rounded-md transition-colors ${
           canGoNext 
