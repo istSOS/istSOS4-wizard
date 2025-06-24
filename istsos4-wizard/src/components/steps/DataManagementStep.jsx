@@ -26,6 +26,9 @@ function DataManagementStep() {
               onChange={(e) => updateConfig('dummyData', e.target.checked ? 1 : 0)}
               label="Generate dummy data for testing"
             />
+            <p className="text-sm text-gray-600 ml-7">
+              Automatically populate the database with sample sensor data for testing
+            </p>
             
             <Toggle
               checked={configuration.clearData === 1}
@@ -34,9 +37,12 @@ function DataManagementStep() {
             />
             
             {configuration.clearData === 1 && (
-              <div className="bg-red-50 border border-red-200 rounded p-3 mt-2">
+              <div className="bg-red-50 border border-red-200 rounded p-3 mt-2 ml-7">
                 <p className="text-red-800 text-sm font-medium">
                   ⚠ Warning: This will permanently delete all existing data!
+                </p>
+                <p className="text-red-700 text-xs mt-1">
+                  Make sure you have backups before enabling this option.
                 </p>
               </div>
             )}
@@ -51,12 +57,18 @@ function DataManagementStep() {
               onChange={(e) => updateConfig('versioning', e.target.checked)}
               label="Enable data versioning"
             />
+            <p className="text-sm text-gray-600 ml-7">
+              Keep historical versions of all data changes
+            </p>
             
             <Toggle
               checked={configuration.duplicates}
               onChange={(e) => updateConfig('duplicates', e.target.checked)}
               label="Allow duplicate entries"
             />
+            <p className="text-sm text-gray-600 ml-7">
+              Permit multiple identical observations at the same timestamp
+            </p>
           </div>
         </div>
       </div>
