@@ -32,6 +32,7 @@ export const fieldValidations = {
     ValidationRules.maxValue(50)
   ],
   pgMaxOverflow: [
+    ValidationRules.required,
     ValidationRules.minValue(0),
     ValidationRules.maxValue(20)
   ],
