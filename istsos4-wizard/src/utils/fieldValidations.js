@@ -43,10 +43,12 @@ export const fieldValidations = {
   
   // Sample Data Configuration
   nThings: [
+    ValidationRules.required,
     ValidationRules.minValue(1),
     ValidationRules.maxValue(100)
   ],
   nObservedProperties: [
+    ValidationRules.required,
     ValidationRules.minValue(1),
     ValidationRules.maxValue(10)
   ],
