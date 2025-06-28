@@ -182,6 +182,48 @@ function SampleDataStep() {
             <option value="P1Y">1 Year</option>
           </select>
         </FormField>
+        <FormField
+          label="Partition Chunk Size"
+          error={validation.errors.partitionChunk}
+          fieldName="partitionChunk"
+          info="Number of records per database partition"
+        >
+          <input
+            type="number"
+            min="1000"
+            max="50000"
+            step="1000"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            value={configuration.partitionChunk}
+            onChange={(e) => {
+              const value = e.target.value;
+              updateConfig(
+                "partitionChunk",
+                value === "" ? "" : parseInt(value)
+              );
+            }}
+            onBlur={() => {
+              handleBlur("partitionChunk");
+
+              if (configuration.partitionChunk === "") {
+                updateConfig("partitionChunk", 10000);
+              }
+            }}
+          />
+        </FormField>
+
+        <FormField label="Chunk Interval" info="Time period for each partition">
+          <select
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            value={configuration.chunkInterval}
+            onChange={(e) => updateConfig("chunkInterval", e.target.value)}
+          >
+            <option value="P1M">1 Month</option>
+            <option value="P3M">3 Months</option>
+            <option value="P6M">6 Months</option>
+            <option value="P1Y">1 Year</option>
+          </select>
+        </FormField>
 
         <FormField
           label="Sampling Frequency"

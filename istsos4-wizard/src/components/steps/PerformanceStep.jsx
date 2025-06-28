@@ -125,56 +125,13 @@ function PerformanceStep() {
             />
           </FormField>
 
-          <FormField 
-            label="Partition Chunk Size"
-            error={validation.errors.partitionChunk}
-            fieldName="partitionChunk"
-            info="Number of records per database partition"
-          >
-            <input
-              type="number"
-              min="1000"
-              max="50000"
-              step="1000"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={configuration.partitionChunk}
-              onChange={(e) => {
-                const value = e.target.value;
-                updateConfig('partitionChunk', value === '' ? '' : parseInt(value));
-              }}
-              onBlur={() => {
-                handleBlur('partitionChunk');
-        
-                if (configuration.partitionChunk === '') {
-                  updateConfig('partitionChunk', 10000);
-                }
-              }}
-            />
-          </FormField>
 
-          <FormField 
-            label="Chunk Interval"
-            info="Time period for each partition"
-          >
-            <select
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={configuration.chunkInterval}
-              onChange={(e) => updateConfig('chunkInterval', e.target.value)}
-            >
-              <option value="P1M">1 Month</option>
-              <option value="P3M">3 Months</option>
-              <option value="P6M">6 Months</option>
-              <option value="P1Y">1 Year</option>
-            </select>
-          </FormField>
         </div>
 
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
           <h3 className="font-semibold text-amber-900 mb-2">Performance Tips</h3>
           <ul className="text-sm text-amber-800 space-y-1">
             <li>• For datasets under 10K records, use Full Count mode</li>
-            <li>• Increase partition chunk size for better write performance</li>
-            <li>• Smaller chunk intervals improve query performance for time-based searches</li>
           </ul>
         </div>
       </div>
