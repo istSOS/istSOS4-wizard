@@ -11,28 +11,33 @@ function WizardProvider({ children }) {
   const saveTimeoutRef = useRef(null);
   
   const loadInitialState = () => {
-    try {
-      const savedState = localStorage.getItem(STORAGE_KEY);
-      if (savedState) {
-        const parsedState = JSON.parse(savedState);
-        return {
-          ...initialState,
-          ...parsedState,
-          validation: {
-            ...initialState.validation,
-            ...parsedState.validation
-          },
-          configuration: {
-            ...initialState.configuration,
-            ...parsedState.configuration
-          }
-        };
-      }
-    } catch (error) {
-      console.error('Error loading saved state:', error);
+  try {
+    const savedState = localStorage.getItem(STORAGE_KEY);
+    if (savedState) {
+      const parsedState = JSON.parse(savedState);
+
+      const savedConfig = { ...parsedState.configuration };
+      delete savedConfig.postgresPassword;
+
+      return {
+        ...initialState,
+        ...parsedState,
+        validation: {
+          ...initialState.validation,
+          ...parsedState.validation
+        },
+        configuration: {
+          ...initialState.configuration,
+          ...savedConfig
+        }
+      };
     }
-    return initialState;
-  };
+  } catch (error) {
+    console.error('Error loading saved state:', error);
+  }
+  return initialState;
+};
+
 
   const [state, dispatch] = useReducer(wizardReducer, loadInitialState());
   
