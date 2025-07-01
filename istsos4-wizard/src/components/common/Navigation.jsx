@@ -1,6 +1,7 @@
-import React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
 import { useWizard } from '../../hooks/useWizard';
+import { useWizardPersistence } from '../../hooks/useWizardPersistence';
 
 const steps = [
   { title: 'Welcome' },
@@ -16,6 +17,9 @@ const steps = [
 
 function Navigation() {
   const { state, dispatch } = useWizard();
+  const { resetWizard } = useWizardPersistence();
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  
   const hasErrors = Object.keys(state.validation.errors).length > 0;
   const hasTouchedErrors = Object.keys(state.validation.errors).some(
     field => state.validation.touched[field]
@@ -30,6 +34,16 @@ function Navigation() {
 
   const handlePrev = () => {
     dispatch({ type: 'PREV_STEP' });
+  };
+
+  const handleReset = () => {
+    if (showResetConfirm) {
+      resetWizard();
+      setShowResetConfirm(false);
+    } else {
+      setShowResetConfirm(true);
+      setTimeout(() => setShowResetConfirm(false), 3000);
+    }
   };
 
   return (
@@ -58,18 +72,32 @@ function Navigation() {
         )}
       </div>
 
-      <button
-        onClick={handleNext}
-        disabled={!canGoNext}
-        className={`flex items-center px-4 py-2 rounded-md transition-colors ${
-          canGoNext 
-            ? 'bg-blue-600 hover:bg-blue-700 text-white' 
-            : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-        }`}
-      >
-        Next
-        <ChevronRight className="w-4 h-4 ml-1" />
-      </button>
+      <div className="flex items-center space-x-2">
+        <button
+          onClick={handleReset}
+          className={`p-2 rounded-md transition-colors ${
+            showResetConfirm 
+              ? 'bg-red-600 text-white' 
+              : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
+          }`}
+          title={showResetConfirm ? 'Click again to confirm reset' : 'Reset wizard'}
+        >
+          <RotateCcw className="w-4 h-4" />
+        </button>
+        
+        <button
+          onClick={handleNext}
+          disabled={!canGoNext}
+          className={`flex items-center px-4 py-2 rounded-md transition-colors ${
+            canGoNext 
+              ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+          }`}
+        >
+          Next
+          <ChevronRight className="w-4 h-4 ml-1" />
+        </button>
+      </div>
     </div>
   );
 }

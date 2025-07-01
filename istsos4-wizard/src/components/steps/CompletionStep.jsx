@@ -1,7 +1,10 @@
 import React from 'react';
-import { Check } from 'lucide-react'
+import { Check, RefreshCw } from 'lucide-react';
+import { useWizardPersistence } from '../../hooks/useWizardPersistence';
 
 function CompletionStep() {
+  const { resetWizard } = useWizardPersistence();
+  
   return (
     <div className="text-center space-y-6">
       <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
@@ -20,7 +23,16 @@ function CompletionStep() {
           <li>• Community Support</li>
         </ul>
       </div>
+      
+      <button
+        onClick={resetWizard}
+        className="flex items-center mx-auto px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md transition-colors"
+      >
+        <RefreshCw className="w-4 h-4 mr-2" />
+        Start New Configuration
+      </button>
     </div>
   );
 }
+
 export default CompletionStep;

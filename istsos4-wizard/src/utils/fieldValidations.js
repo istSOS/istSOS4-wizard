@@ -52,8 +52,12 @@ export const fieldValidations = {
     ValidationRules.minValue(1),
     ValidationRules.maxValue(10)
   ],
-  
-  // Performance Settings
+   partitionChunk: [
+    ValidationRules.minValue(1000),
+    ValidationRules.maxValue(50000)
+  ],
+
+    // Performance Settings
   countEstimateThreshold: [
     ValidationRules.minValue(1000),
     ValidationRules.maxValue(100000)
@@ -61,10 +65,6 @@ export const fieldValidations = {
   topValue: [
     ValidationRules.minValue(10),
     ValidationRules.maxValue(1000)
-  ],
-  partitionChunk: [
-    ValidationRules.minValue(1000),
-    ValidationRules.maxValue(50000)
   ]
 };
 
@@ -99,11 +99,11 @@ export const validateStep = (stepNumber, configuration) => {
       break;
     case 5: // Sample Data Configuration
       if (configuration.dummyData === 1) {
-        fieldsToValidate = ['nThings', 'nObservedProperties'];
+        fieldsToValidate = ['nThings', 'nObservedProperties', 'partitionChunk'];
       }
       break;
     case 6: // Performance Settings
-      fieldsToValidate = ['countEstimateThreshold', 'topValue', 'partitionChunk'];
+      fieldsToValidate = ['countEstimateThreshold', 'topValue'];
       break;
   }
   
