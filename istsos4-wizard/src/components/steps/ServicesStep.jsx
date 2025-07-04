@@ -14,15 +14,6 @@ function ServicesStep() {
     });
   };
 
-  const epsgOptions = [
-    { value: 4326, label: 'EPSG:4326 (WGS 84)', desc: 'Global GPS coordinates' },
-    { value: 3857, label: 'EPSG:3857 (Web Mercator)', desc: 'Web mapping standard' },
-    { value: 2154, label: 'EPSG:2154 (RGF93 / Lambert-93)', desc: 'France' },
-    { value: 25832, label: 'EPSG:25832 (ETRS89 / UTM zone 32N)', desc: 'Central Europe' },
-    { value: 32633, label: 'EPSG:32633 (WGS 84 / UTM zone 33N)', desc: 'Eastern Europe' },
-    { value: 4269, label: 'EPSG:4269 (NAD83)', desc: 'North America' }
-  ];
-
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">Additional Services</h2>
@@ -63,30 +54,67 @@ function ServicesStep() {
           label="Coordinate Reference System (EPSG)"
           info="Spatial reference system for geographic data"
         >
-          <div className="space-y-2">
-            <select
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={configuration.epsg}
-              onChange={(e) => updateConfig('epsg', parseInt(e.target.value))}
-            >
-              {epsgOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label} - {option.desc}
-                </option>
-              ))}
-            </select>
+          <div className="space-y-3">
+            {/* EPSG Input */}
+            <div className="relative">
+              <input
+                type="number"
+                placeholder="Enter EPSG code (e.g., 4326)"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                value={configuration.epsg || ''}
+                onChange={(e) => updateConfig('epsg', e.target.value ? parseInt(e.target.value) : '')}
+                min="1"
+                max="99999"
+              />
+            </div>
+
+            {/* EPSG code validation */}
+            {configuration.epsg && (
+              <div className="bg-blue-50 border border-blue-200 rounded p-3">
+                <p className="text-sm text-blue-800">
+                  <strong>Selected EPSG Code:</strong> {configuration.epsg}
+                </p>
+                <p className="text-sm text-blue-700 mt-1">
+                  Make sure this code is valid for your geographic area and data requirements.
+                </p>
+              </div>
+            )}
             
-            <div className="text-sm text-gray-600">
-              {configuration.epsg === 4326 && (
-                <p className="text-green-700">
-                  ✓ WGS 84 is recommended for global applications and GPS data
-                </p>
-              )}
-              {configuration.epsg === 3857 && (
-                <p className="text-blue-700">
-                  ℹ Web Mercator is ideal for web mapping applications
-                </p>
-              )}
+            {/* Common EPSG codes hints */}
+            <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded">
+              <strong>Common EPSG Codes:</strong>
+              <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div>
+                  <p className="font-medium text-gray-700">Global:</p>
+                  <ul className="ml-2 space-y-1">
+                    <li>• <strong>4326</strong> - WGS 84 (GPS coordinates)</li>
+                    <li>• <strong>3857</strong> - Web Mercator (Google Maps)</li>
+                    <li>• <strong>4269</strong> - NAD83 (North America)</li>
+                    <li>• <strong>4258</strong> - ETRS89 (Europe)</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="font-medium text-gray-700">Regional:</p>
+                  <ul className="ml-2 space-y-1">
+                    <li>• <strong>2154</strong> - Lambert-93 (France)</li>
+                    <li>• <strong>27700</strong> - British National Grid (UK)</li>
+                    <li>• <strong>32633</strong> - UTM Zone 33N (Europe)</li>
+                    <li>• <strong>3035</strong> - ETRS89 LAEA (Europe)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* How to find EPSG codes */}
+            <div className="text-sm text-gray-600 bg-yellow-50 border border-yellow-200 rounded p-3">
+              <strong>How to find your EPSG code:</strong>
+              <ul className="mt-1 space-y-1">
+                <li>• Visit <a href="https://epsg.io" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">epsg.io</a> to search by location or name</li>
+                <li>• Use <a href="https://spatialreference.org" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">spatialreference.org</a> for detailed information</li>
+                <li>• Check your existing GIS data properties</li>
+                <li>• For GPS data, use <strong>4326</strong> (WGS 84)</li>
+                <li>• For web mapping, use <strong>3857</strong> (Web Mercator)</li>
+              </ul>
             </div>
           </div>
         </FormField>
@@ -110,6 +138,7 @@ function ServicesStep() {
             </div>
           </div>
         </div>
+    
       </div>
     </div>
   );
