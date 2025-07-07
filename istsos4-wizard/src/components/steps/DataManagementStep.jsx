@@ -54,7 +54,7 @@ function DataManagementStep() {
           <div className="space-y-4">
             <Toggle
               checked={configuration.versioning}
-              onChange={(e) => updateConfig('versioning', e.target.checked)}
+              onChange={(e) => updateConfig('versioning', e.target.checked ? 1 : 0)}
               label="Enable data versioning"
             />
             <p className="text-sm text-gray-600 ml-7">
@@ -63,7 +63,7 @@ function DataManagementStep() {
             
             <Toggle
               checked={configuration.duplicates}
-              onChange={(e) => updateConfig('duplicates', e.target.checked)}
+              onChange={(e) => updateConfig('duplicates', e.target.checked ? 1 : 0)}
               label="Allow duplicate entries"
             />
             <p className="text-sm text-gray-600 ml-7">

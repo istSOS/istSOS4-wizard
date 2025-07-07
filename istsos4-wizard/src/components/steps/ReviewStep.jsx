@@ -8,7 +8,7 @@ function ReviewStep() {
   const { configuration } = state;
   const [copySuccess, setCopySuccess] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
-
+  
   useEffect(() => {
     // Validate entire configuration
     const errors = validateConfiguration(configuration);
@@ -39,8 +39,8 @@ PG_POOL_TIMEOUT=${configuration.pgPoolTimeout}
 # Data Management
 DUMMY_DATA=${configuration.dummyData}
 CLEAR_DATA=${configuration.clearData}
-VERSIONING=${configuration.versioning.toString()}
-DUPLICATES=${configuration.duplicates.toString()}
+VERSIONING=${configuration.versioning}
+DUPLICATES=${configuration.duplicates}
 
 # Sample Data Configuration
 N_THINGS=${configuration.nThings}

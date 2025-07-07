@@ -27,8 +27,8 @@ export const initialState = {
     // Data Management
     dummyData: 0,
     clearData: 0,
-    versioning: false,
-    duplicates: false,
+    versioning: 0,
+    duplicates: 0,
     
     // Sample Data
     nThings: 3,
