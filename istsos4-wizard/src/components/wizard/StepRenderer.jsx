@@ -11,6 +11,7 @@ import PerformanceStep from '../steps/PerformanceStep';
 import ServicesStep from '../steps/ServicesStep';
 import ReviewStep from '../steps/ReviewStep';
 import CompletionStep from '../steps/CompletionStep';
+import AuthorizationStep from '../steps/AuthorizationStep';
 
 function StepRenderer() {
   const { state } = useWizard();
@@ -19,6 +20,7 @@ function StepRenderer() {
     WelcomeStep,
     BasicServerStep,
     DatabaseStep,
+    AuthorizationStep,
     DataManagementStep,
     SampleDataStep,
     PerformanceStep,

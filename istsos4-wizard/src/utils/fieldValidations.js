@@ -41,6 +41,29 @@ export const fieldValidations = {
     ValidationRules.maxValue(120)
   ],
 
+  // Authentication Configuration
+  istsosAdmin: [
+    ValidationRules.required,
+    ValidationRules.alphanumeric,
+    ValidationRules.minLength(1),
+    ValidationRules.maxLength(63)
+  ],
+  istsosAdminPassword: [
+    ValidationRules.required,
+    ValidationRules.password
+  ],
+  secretKey: [
+    ValidationRules.required,
+    ValidationRules.minLength(32),
+    ValidationRules.maxLength(64)
+  ],
+  accessTokenExpireMinutes: [
+    ValidationRules.required,
+    ValidationRules.minValue(1),
+    ValidationRules.maxValue(1440) // 1 day in minutes
+  ],
+
+
   // Sample Data Configuration
   nThings: [
     ValidationRules.required,
@@ -107,18 +130,22 @@ export const validateStep = (stepNumber, configuration) => {
         fieldsToValidate.push('pgPoolSize', 'pgMaxOverflow', 'pgPoolTimeout');
       }
       break;
+     
+    case 4: // Authentication Configuration
+      fieldsToValidate = ['istsosAdmin', 'istsosAdminPassword', 'secretKey', 'accessTokenExpireMinutes' ];
+      break;  
 
-    case 5: // Sample Data Configuration
+    case 6: // Sample Data Configuration
       if (configuration.dummyData === 1) {
         fieldsToValidate = ['nThings', 'nObservedProperties', 'partitionChunk'];
       }
       break;
 
-    case 6: // Performance Settings
+    case 7: // Performance Settings
       fieldsToValidate = ['countEstimateThreshold', 'topValue'];
       break;
 
-    case 7: // Additional Services
+    case 8: // Additional Services
       fieldsToValidate = ['epsg'];
       break;
   }

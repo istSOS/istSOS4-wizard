@@ -7,6 +7,7 @@ const steps = [
   { title: 'Welcome' },
   { title: 'Server Config' },
   { title: 'Database' },
+  { title: 'Authorization' },
   { title: 'Data Management' },
   { title: 'Sample Data' },
   { title: 'Performance' },
