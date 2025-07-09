@@ -36,6 +36,15 @@ PG_MAX_OVERFLOW=${configuration.pgMaxOverflow}
 PG_POOL_SIZE=${configuration.pgPoolSize}
 PG_POOL_TIMEOUT=${configuration.pgPoolTimeout}
 
+# Authentication Configuration
+ISTSOS_ADMIN=${configuration.istsosAdmin}
+ISTSOS_ADMIN_PASSWORD=${configuration.istsosAdminPassword}
+AUTHORIZATION=${configuration.authorization}
+SECRET_KEY=${configuration.secretKey}
+ALGORITHM=${configuration.algorithm}
+ACCESS_TOKEN_EXPIRE_MINUTES=${configuration.accessTokenExpireMinutes}
+ANONYMOUS_VIEWER=${configuration.anonymousViewer}
+
 # Data Management
 DUMMY_DATA=${configuration.dummyData}
 CLEAR_DATA=${configuration.clearData}
