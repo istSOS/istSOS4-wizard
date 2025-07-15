@@ -76,7 +76,7 @@ function SampleDataStep() {
           the Data Management step to configure these options.
         </p>
         <button
-          onClick={() => dispatch({ type: "SET_STEP", payload: 4 })}
+          onClick={() => dispatch({ type: "SET_STEP", payload: 5 })}
           className="text-blue-600 hover:text-blue-800 font-medium"
         >
           ← Go back to Data Management
