@@ -2,7 +2,7 @@ import React from 'react';
 import { AlertTriangle, Info } from 'lucide-react';
 import { useWizard } from '../../hooks/useWizard';
 
-function FormField({ label, children, error, info, fieldName, required = false }) {
+function FormField({ label, children, error, fieldName, required = false }) {
   const { state } = useWizard();
   const showError = error && state.validation.touched[fieldName];
   
@@ -11,12 +11,6 @@ function FormField({ label, children, error, info, fieldName, required = false }
       <label className="block text-sm font-medium text-gray-700">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
-        {info && (
-          <Info 
-            className="inline w-4 h-4 ml-1 text-gray-400 cursor-help" 
-            title={info} 
-          />
-        )}
       </label>
       {React.cloneElement(children, {
         className: `${children.props.className} ${

@@ -52,9 +52,9 @@ export const initialState = {
     topValue: 100,
     partitionChunk: 10000,
     chunkInterval: 'P1Y',
+    redis: 0,
     
     // Additional Services
-    redis: 0,
     epsg: 4326
   }
 };

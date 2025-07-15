@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useWizard } from "../../hooks/useWizard";
 import FormField from "../common/FormField";
 
 function SampleDataStep() {
   const { state, dispatch } = useWizard();
   const { configuration, validation } = state;
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const updateConfig = (field, value) => {
     dispatch({
@@ -99,7 +100,6 @@ function SampleDataStep() {
           label="Number of Things (Sensors)"
           error={validation.errors.nThings}
           fieldName="nThings"
-          info="How many sensor devices to simulate"
         >
           <input
             type="number"
@@ -119,7 +119,6 @@ function SampleDataStep() {
           label="Observed Properties per Thing"
           error={validation.errors.nObservedProperties}
           fieldName="nObservedProperties"
-          info="Number of measurements per sensor (e.g., temperature, humidity)"
         >
           <input
             type="number"
@@ -140,7 +139,6 @@ function SampleDataStep() {
 
         <FormField
           label="Start Date/Time"
-          info="When the simulated data begins"
         >
           <input
             type="datetime-local"
@@ -169,7 +167,6 @@ function SampleDataStep() {
 
         <FormField
           label="Data Generation Period"
-          info="How long to generate data for"
         >
           <select
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -182,11 +179,38 @@ function SampleDataStep() {
             <option value="P1Y">1 Year</option>
           </select>
         </FormField>
+        
         <FormField
+          label="Sampling Frequency"
+        >
+          <select
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            value={configuration.frequency}
+            onChange={(e) => updateConfig("frequency", e.target.value)}
+          >
+            <option value="PT1M">Every minute</option>
+            <option value="PT5M">Every 5 minutes</option>
+            <option value="PT15M">Every 15 minutes</option>
+            <option value="PT1H">Every hour</option>
+          </select>
+        </FormField>
+       
+      </div>
+    <div className="border-t border-b pt-4 pb-4">
+        <button
+          type="button"
+          className="text-blue-600 hover:text-blue-800 font-medium"
+          onClick={() => setShowAdvanced(!showAdvanced)}
+        >
+          {showAdvanced ? "Hide" : "Show"} Advanced Settings
+        </button>
+
+        {showAdvanced && (
+          <div className="grid grid-cols-1 md:grid-cols-3 mb-2 gap-6 mt-4">
+            <FormField
           label="Partition Chunk Size"
           error={validation.errors.partitionChunk}
           fieldName="partitionChunk"
-          info="Number of records per database partition"
         >
           <input
             type="number"
@@ -212,7 +236,7 @@ function SampleDataStep() {
           />
         </FormField>
 
-        <FormField label="Chunk Interval" info="Time period for each partition">
+        <FormField label="Chunk Interval" >
           <select
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             value={configuration.chunkInterval}
@@ -225,23 +249,9 @@ function SampleDataStep() {
           </select>
         </FormField>
 
-        <FormField
-          label="Sampling Frequency"
-          info="How often measurements are taken"
-        >
-          <select
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            value={configuration.frequency}
-            onChange={(e) => updateConfig("frequency", e.target.value)}
-          >
-            <option value="PT1M">Every minute</option>
-            <option value="PT5M">Every 5 minutes</option>
-            <option value="PT15M">Every 15 minutes</option>
-            <option value="PT1H">Every hour</option>
-          </select>
-        </FormField>
+          </div>
+        )}
       </div>
-
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <h3 className="font-semibold text-blue-900 mb-2">
           Data Generation Summary
@@ -266,6 +276,8 @@ function SampleDataStep() {
           </p>
         )}
       </div>
+      
+  
     </div>
   );
 }

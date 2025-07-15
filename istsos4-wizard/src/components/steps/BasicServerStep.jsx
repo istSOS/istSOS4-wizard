@@ -25,7 +25,6 @@ function BasicServerStep() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <FormField 
           label="Hostname" 
-          info="The server URL where istSOS4 will be accessible"
           error={validation.errors.hostname}
           fieldName="hostname"
           required
@@ -42,7 +41,6 @@ function BasicServerStep() {
 
         <FormField 
           label="Subpath" 
-          info="API endpoint subpath"
           error={validation.errors.subpath}
           fieldName="subpath"
           required

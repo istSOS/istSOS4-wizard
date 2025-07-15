@@ -47,7 +47,6 @@ function DatabaseStep() {
           error={validation.errors.postgresDb}
           fieldName="postgresDb"
           required
-          info="PostgreSQL database name"
         >
           <input
             type="text"
@@ -64,7 +63,6 @@ function DatabaseStep() {
           error={validation.errors.postgresUser}
           fieldName="postgresUser"
           required
-          info="Database user with create permissions"
         >
           <input
             type="text"
@@ -146,7 +144,6 @@ function DatabaseStep() {
           <div className="grid grid-cols-1 md:grid-cols-3 mb-6 gap-6 mt-4">
             <FormField
               label="Pool Size"
-              info="Maximum database connections"
               error={validation.errors.pgPoolSize}
               fieldName="pgPoolSize"
             >
@@ -169,7 +166,6 @@ function DatabaseStep() {
 
             <FormField
               label="Max Overflow"
-              info="Extra connections beyond pool size"
               error={validation.errors.pgMaxOverflow}
               fieldName="pgMaxOverflow"
             >
@@ -192,7 +188,6 @@ function DatabaseStep() {
 
             <FormField
               label="Pool Timeout (seconds)"
-              info="Connection timeout duration"
               error={validation.errors.pgPoolTimeout}
               fieldName="pgPoolTimeout"
             >

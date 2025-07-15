@@ -26,45 +26,12 @@ function ServicesStep() {
       </p>
 
       <div className="space-y-6">
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <div className="flex items-start">
-            <div className="flex-1">
-              <Toggle
-                checked={configuration.redis === 1}
-                onChange={(e) =>
-                  updateConfig("redis", e.target.checked ? 1 : 0)
-                }
-                label="Enable Redis Caching"
-              />
-              <p className="text-sm text-gray-600 mt-2 ml-7">
-                Redis improves performance by caching frequently accessed data
-                and API responses
-              </p>
-
-              {configuration.redis === 1 && (
-                <div className="ml-7 mt-3 space-y-2">
-                  <div className="bg-blue-50 border border-blue-200 rounded p-3">
-                    <p className="text-sm text-blue-800">
-                      <strong>Note:</strong> Ensure Redis is included in your
-                      Docker Compose configuration
-                    </p>
-                  </div>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• Default connection: redis://redis:6379</li>
-                    <li>• Recommended memory: 512MB minimum</li>
-                    <li>• Cache TTL: 1 hour (configurable)</li>
-                  </ul>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+  
 
         <FormField
           label="Coordinate Reference System (EPSG)"
           error={validation.errors.epsg}
           fieldName="epsg"
-          info="Spatial reference system for geographic data"
         >
           <div className="space-y-3">
             {/* EPSG Input */}
@@ -181,7 +148,7 @@ function ServicesStep() {
             Service Architecture
           </h3>
           <div className="space-y-3 text-sm text-gray-600">
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <div
                 className={`w-4 h-4 rounded-full mr-3 ${
                   configuration.redis === 1 ? "bg-green-500" : "bg-gray-300"
@@ -191,7 +158,7 @@ function ServicesStep() {
                 Redis Cache{" "}
                 {configuration.redis === 1 ? "(Enabled)" : "(Disabled)"}
               </span>
-            </div>
+            </div> */}
             <div className="flex items-center">
               <div className="w-4 h-4 rounded-full bg-green-500 mr-3"></div>
               <span>PostgreSQL Database (Required)</span>

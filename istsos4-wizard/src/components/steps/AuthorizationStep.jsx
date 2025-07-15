@@ -63,7 +63,6 @@ function AuthorizationStep() {
           <FormField
             label="Enable Authorization"
             fieldName="authorization"
-            info="Enable or disable the authorization system"
           >
             <Toggle
               checked={configuration.authorization === 1}
@@ -81,7 +80,6 @@ function AuthorizationStep() {
             error={validation.errors.istsosAdmin}
             fieldName="istsosAdmin"
             required
-            info="Username for the istSOS administrator account"
           >
             <input
               type="text"
@@ -98,7 +96,6 @@ function AuthorizationStep() {
             error={validation.errors.istsosAdminPassword}
             fieldName="istsosAdminPassword"
             required
-            info="Password for the istSOS administrator account"
             defaultValue={configuration.istsosAdminPassword || ""}
           >
             <div>
@@ -157,7 +154,6 @@ function AuthorizationStep() {
           <FormField
             label="Anonymous Viewer"
             fieldName="anonymousViewer"
-            info="Allow anonymous users to view data"
           >
             <Toggle
               checked={configuration.anonymousViewer === 1}
@@ -176,7 +172,6 @@ function AuthorizationStep() {
             error={validation.errors.accessTokenExpireMinutes}
             fieldName="accessTokenExpireMinutes"
             required
-            info="The expiration time for access tokens in minutes"
           >
             <input
               type="number"
@@ -200,7 +195,6 @@ function AuthorizationStep() {
             label="Algorithm"
             fieldName="algorithm"
             required
-            info="The algorithm used for encoding tokens"
           >
             <select
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -223,7 +217,6 @@ function AuthorizationStep() {
           error={validation.errors.secretKey}
           fieldName="secretKey"
           required
-          info="A secret key used for encoding tokens (64 hex characters)"
         >
           <div className="space-y-2">
             <div className="flex gap-2">
