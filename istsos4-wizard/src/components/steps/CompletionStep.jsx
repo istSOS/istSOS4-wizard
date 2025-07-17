@@ -1,7 +1,8 @@
 import React from 'react';
-import { Check } from 'lucide-react'
+import { Check} from 'lucide-react';
 
 function CompletionStep() {
+  
   return (
     <div className="text-center space-y-6">
       <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
@@ -23,4 +24,5 @@ function CompletionStep() {
     </div>
   );
 }
+
 export default CompletionStep;

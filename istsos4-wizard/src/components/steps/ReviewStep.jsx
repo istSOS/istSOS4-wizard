@@ -8,7 +8,7 @@ function ReviewStep() {
   const { configuration } = state;
   const [copySuccess, setCopySuccess] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
-
+  
   useEffect(() => {
     // Validate entire configuration
     const errors = validateConfiguration(configuration);
@@ -36,11 +36,20 @@ PG_MAX_OVERFLOW=${configuration.pgMaxOverflow}
 PG_POOL_SIZE=${configuration.pgPoolSize}
 PG_POOL_TIMEOUT=${configuration.pgPoolTimeout}
 
+# Authentication Configuration
+ISTSOS_ADMIN=${configuration.istsosAdmin}
+ISTSOS_ADMIN_PASSWORD=${configuration.istsosAdminPassword}
+AUTHORIZATION=${configuration.authorization}
+SECRET_KEY=${configuration.secretKey}
+ALGORITHM=${configuration.algorithm}
+ACCESS_TOKEN_EXPIRE_MINUTES=${configuration.accessTokenExpireMinutes}
+ANONYMOUS_VIEWER=${configuration.anonymousViewer}
+
 # Data Management
 DUMMY_DATA=${configuration.dummyData}
 CLEAR_DATA=${configuration.clearData}
-VERSIONING=${configuration.versioning.toString()}
-DUPLICATES=${configuration.duplicates.toString()}
+VERSIONING=${configuration.versioning}
+DUPLICATES=${configuration.duplicates}
 
 # Sample Data Configuration
 N_THINGS=${configuration.nThings}
