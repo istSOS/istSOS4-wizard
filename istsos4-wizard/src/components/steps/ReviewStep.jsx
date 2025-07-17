@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Download, Copy, Check, AlertTriangle } from 'lucide-react';
-import { useWizard } from '../../hooks/useWizard';
-import { validateConfiguration } from '../../utils/fieldValidations';
+import React, { useState, useEffect } from "react";
+import { Download, Copy, Check, AlertTriangle } from "lucide-react";
+import { useWizard } from "../../hooks/useWizard";
+import { validateConfiguration } from "../../utils/fieldValidations";
 
 function ReviewStep() {
   const { state } = useWizard();
   const { configuration } = state;
   const [copySuccess, setCopySuccess] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
-  
+  const [activeTab, setActiveTab] = useState("env"); // 'env' or 'docker'
+
   useEffect(() => {
     // Validate entire configuration
     const errors = validateConfiguration(configuration);
@@ -70,22 +71,140 @@ REDIS=${configuration.redis}
 EPSG=${configuration.epsg}
 
 # Docker Network Configuration (if using Redis)
-${configuration.redis === 1 ? 'REDIS_HOST=redis\nREDIS_PORT=6379' : '# Redis disabled'}`;
+${
+  configuration.redis === 1
+    ? "REDIS_HOST=redis\nREDIS_PORT=6379"
+    : "# Redis disabled"
+}`;
 
     return env;
   };
 
   const downloadEnvFile = () => {
     const envContent = generateEnvFile();
-    const blob = new Blob([envContent], { type: 'text/plain;charset=utf-8' });
+    const blob = new Blob([envContent], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'istsos4.env';
+    a.download = "istsos4.env";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  };
+
+  const downloadDockerCompose = () => {
+    const dockerComposeContent = generateDockerComposeFile();
+    const blob = new Blob([dockerComposeContent], {
+      type: "text/yaml;charset=utf-8",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "docker-compose.yml";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const generateDockerComposeFile = () => {
+    return `services:
+  database:
+    image: ghcr.io/istsos/istsos4/database:1.4
+    environment:
+      POSTGRES_DB: \${POSTGRES_DB}
+      POSTGRES_USER: \${POSTGRES_USER}
+      POSTGRES_PASSWORD: \${POSTGRES_PASSWORD}
+      DATADIR: /var/lib/postgresql/data
+    command: >
+      postgres
+        -c custom.versioning=\${VERSIONING:-0}
+        -c custom.authorization=\${AUTHORIZATION:-0}
+        -c custom.duplicates=\${DUPLICATES:-0}
+        -c custom.epsg=\${EPSG:-4326}
+        -c custom.user=\${ISTSOS_ADMIN:-admin}
+        -c custom.password=\${ISTSOS_ADMIN_PASSWORD:-admin}
+        -c log_statement="all"
+        -c log_destination="stderr"
+        -c log_duration="on"
+    ports:
+      - "45432:5432"
+    healthcheck:
+      test: pg_isready -U \${POSTGRES_USER} -d \${POSTGRES_DB}
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    image: ghcr.io/istsos/istsos4/api:1.9
+    environment:
+      HOSTNAME: \${HOSTNAME}
+      SUBPATH: \${SUBPATH}
+      VERSION: \${VERSION}
+      DEBUG: \${DEBUG}
+      VERSIONING: \${VERSIONING}
+      POSTGRES_DB: \${POSTGRES_DB}
+      ISTSOS_ADMIN: \${ISTSOS_ADMIN}
+      ISTSOS_ADMIN_PASSWORD: \${ISTSOS_ADMIN_PASSWORD}
+      POSTGRES_HOST: \${POSTGRES_HOST}
+      PG_MAX_OVERFLOW: \${PG_MAX_OVERFLOW}
+      PG_POOL_SIZE: \${PG_POOL_SIZE}
+      PG_POOL_TIMEOUT: \${PG_POOL_TIMEOUT}
+      COUNT_MODE: \${COUNT_MODE}
+      COUNT_ESTIMATE_THRESHOLD: \${COUNT_ESTIMATE_THRESHOLD}
+      TOP_VALUE: \${TOP_VALUE}
+      PARTITION_CHUNK: \${PARTITION_CHUNK}
+      REDIS: \${REDIS}
+      EPSG: \${EPSG}
+      AUTHORIZATION: \${AUTHORIZATION}
+      SECRET_KEY: \${SECRET_KEY}
+      ACCESS_TOKEN_EXPIRE_MINUTES: \${ACCESS_TOKEN_EXPIRE_MINUTES}
+      ALGORITHM: \${ALGORITHM}
+      ANONYMOUS_VIEWER: \${ANONYMOUS_VIEWER}
+    command: uvicorn --timeout-keep-alive 75 --workers 2 --host 0.0.0.0 --port 5000 app.main:app
+    ports:
+      - 8018:5000
+    working_dir: /code
+
+  redis:
+    image: redis:7.4.0-alpine3.20
+    restart: always
+
+  dummy_data:
+    image: ghcr.io/istsos/istsos4/dummy_data:1.5
+    command: python3 generator.py
+    working_dir: /dummy_data
+    environment:
+      HOSTNAME: \${HOSTNAME}
+      SUBPATH: \${SUBPATH}
+      VERSION: \${VERSION}
+      VERSIONING: \${VERSIONING}
+      POSTGRES_DB: \${POSTGRES_DB}
+      ISTSOS_ADMIN: \${ISTSOS_ADMIN}
+      ISTSOS_ADMIN_PASSWORD: \${ISTSOS_ADMIN_PASSWORD}
+      POSTGRES_HOST: \${POSTGRES_HOST}
+      DUMMY_DATA: \${DUMMY_DATA}
+      CLEAR_DATA: \${CLEAR_DATA}
+      N_THINGS: \${N_THINGS}
+      N_OBSERVED_PROPERTIES: \${N_OBSERVED_PROPERTIES}
+      INTERVAL: \${INTERVAL}
+      FREQUENCY: \${FREQUENCY}
+      START_DATETIME: \${START_DATETIME}
+      CHUNK_INTERVAL: \${CHUNK_INTERVAL}
+      EPSG: \${EPSG}
+      AUTHORIZATION: \${AUTHORIZATION}
+`;
+  };
+
+  const copyDockerComposeToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(generateDockerComposeFile());
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
   };
 
   const copyToClipboard = async () => {
@@ -94,18 +213,23 @@ ${configuration.redis === 1 ? 'REDIS_HOST=redis\nREDIS_PORT=6379' : '# Redis dis
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
     } catch (err) {
-      console.error('Failed to copy:', err);
+      console.error("Failed to copy:", err);
     }
   };
 
   const ConfigurationSummary = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
       <div className="bg-gray-50 p-4 rounded-lg">
-        <h3 className="font-semibold text-gray-900 mb-3">Server Configuration</h3>
+        <h3 className="font-semibold text-gray-900 mb-3">
+          Server Configuration
+        </h3>
         <dl className="space-y-2 text-sm">
           <div className="flex justify-between">
             <dt className="text-gray-600">URL:</dt>
-            <dd className="font-medium">{configuration.hostname}{configuration.subpath}</dd>
+            <dd className="font-medium">
+              {configuration.hostname}
+              {configuration.subpath}
+            </dd>
           </div>
           <div className="flex justify-between">
             <dt className="text-gray-600">API Version:</dt>
@@ -113,13 +237,17 @@ ${configuration.redis === 1 ? 'REDIS_HOST=redis\nREDIS_PORT=6379' : '# Redis dis
           </div>
           <div className="flex justify-between">
             <dt className="text-gray-600">Debug Mode:</dt>
-            <dd className="font-medium">{configuration.debug ? 'Enabled' : 'Disabled'}</dd>
+            <dd className="font-medium">
+              {configuration.debug ? "Enabled" : "Disabled"}
+            </dd>
           </div>
         </dl>
       </div>
 
       <div className="bg-gray-50 p-4 rounded-lg">
-        <h3 className="font-semibold text-gray-900 mb-3">Database Configuration</h3>
+        <h3 className="font-semibold text-gray-900 mb-3">
+          Database Configuration
+        </h3>
         <dl className="space-y-2 text-sm">
           <div className="flex justify-between">
             <dt className="text-gray-600">Database:</dt>
@@ -141,19 +269,24 @@ ${configuration.redis === 1 ? 'REDIS_HOST=redis\nREDIS_PORT=6379' : '# Redis dis
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">Configuration Review</h2>
-      
+
       {hasErrors && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4">
           <div className="flex items-start">
             <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 mr-3 flex-shrink-0" />
             <div>
-              <h3 className="font-semibold text-red-900 mb-2">Validation Errors Found</h3>
+              <h3 className="font-semibold text-red-900 mb-2">
+                Validation Errors Found
+              </h3>
               <p className="text-red-800 text-sm mb-3">
-                Please fix the following errors before generating the configuration:
+                Please fix the following errors before generating the
+                configuration:
               </p>
               <ul className="text-sm text-red-700 space-y-1">
                 {Object.entries(validationErrors).map(([field, error]) => (
-                  <li key={field}>• <strong>{field}:</strong> {error}</li>
+                  <li key={field}>
+                    • <strong>{field}:</strong> {error}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -162,31 +295,64 @@ ${configuration.redis === 1 ? 'REDIS_HOST=redis\nREDIS_PORT=6379' : '# Redis dis
       )}
 
       <ConfigurationSummary />
-      
+
       <div className="bg-gray-50 p-4 rounded-lg">
-        <h3 className="font-semibold text-gray-900 mb-4">Generated .env File Preview</h3>
+        <h3 className="font-semibold text-gray-900 mb-4">
+          Generated Configuration Files Preview
+        </h3>
+
+        <div className="flex border-b border-gray-300 mb-4">
+          <button
+            onClick={() => setActiveTab("env")}
+            className={`px-4 py-2 text-sm font-medium transition-colors  ${
+              activeTab === "env"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-600 hover:text-gray-800"
+            }`}
+          >
+            .env File
+          </button>
+          <button
+            onClick={() => setActiveTab("docker")}
+            className={`px-4 py-2 text-sm font-medium transition-colors ${
+              activeTab === "docker"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-600 hover:text-gray-800"
+            }`}
+          >
+            docker-compose.yml
+          </button>
+        </div>
+
         <div className="bg-white rounded border border-gray-300 overflow-hidden">
           <div className="bg-gray-100 px-4 py-2 border-b border-gray-300 flex justify-between items-center">
-            <span className="text-sm font-medium text-gray-700">istsos4.env</span>
+            <span className="text-sm font-medium text-gray-700">
+              {activeTab === "env" ? "istsos4.env" : "docker-compose.yml"}
+            </span>
             <div className="flex space-x-2">
               <button
-                onClick={copyToClipboard}
+                onClick={
+                  activeTab === "env"
+                    ? copyToClipboard
+                    : copyDockerComposeToClipboard
+                }
                 className="text-gray-600 hover:text-gray-800"
                 title="Copy to clipboard"
               >
-                {copySuccess ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              </button>
-              <button
-                onClick={downloadEnvFile}
-                className="text-gray-600 hover:text-gray-800"
-                title="Download file"
-              >
-                <Download className="w-4 h-4" />
+                {copySuccess ? (
+                  <Check className="w-4 h-4" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
               </button>
             </div>
           </div>
           <pre className="p-4 text-sm overflow-x-auto max-h-96">
-            <code>{generateEnvFile()}</code>
+            <code>
+              {activeTab === "env"
+                ? generateEnvFile()
+                : generateDockerComposeFile()}
+            </code>
           </pre>
         </div>
       </div>
@@ -196,46 +362,65 @@ ${configuration.redis === 1 ? 'REDIS_HOST=redis\nREDIS_PORT=6379' : '# Redis dis
           onClick={downloadEnvFile}
           disabled={hasErrors}
           className={`flex items-center justify-center px-6 py-3 rounded-md transition-colors ${
-            hasErrors 
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-              : 'bg-blue-600 text-white hover:bg-blue-700'
+            hasErrors
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
         >
           <Download className="w-5 h-5 mr-2" />
           Download .env File
         </button>
-        
+
         <button
-          onClick={copyToClipboard}
+          onClick={downloadDockerCompose}
           disabled={hasErrors}
           className={`flex items-center justify-center px-6 py-3 rounded-md transition-colors ${
-            hasErrors 
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-              : 'bg-gray-600 text-white hover:bg-gray-700'
+            hasErrors
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-green-600 text-white hover:bg-green-700"
           }`}
         >
-          {copySuccess ? (
-            <>
-              <Check className="w-5 h-5 mr-2" />
-              Copied!
-            </>
-          ) : (
-            <>
-              <Copy className="w-5 h-5 mr-2" />
-              Copy to Clipboard
-            </>
-          )}
+          <Download className="w-5 h-5 mr-2" />
+          Download Docker Compose File
         </button>
       </div>
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <h3 className="font-semibold text-blue-900 mb-2">Next Steps:</h3>
         <ol className="text-sm text-blue-800 space-y-2 list-decimal list-inside">
-          <li>Save the .env file in your istSOS4 project directory</li>
+          <li>
+            Save both the{" "}
+            <code className="bg-blue-100 px-2 py-0.5 rounded font-mono">
+              .env
+            </code>{" "}
+            and{" "}
+            <code className="bg-blue-100 px-2 py-0.5 rounded font-mono">
+              docker-compose.yml
+            </code>{" "}
+            files in your istSOS4 project directory
+          </li>
           <li>Ensure Docker and Docker Compose are installed</li>
-          <li>Run <code className="bg-blue-100 px-2 py-0.5 rounded font-mono">docker-compose up -d</code></li>
-          <li>Access istSOS4 at <a href={configuration.hostname} className="underline">{configuration.hostname}{configuration.subpath}</a></li>
-          <li>Check logs with <code className="bg-blue-100 px-2 py-0.5 rounded font-mono">docker-compose logs -f</code></li>
+          <li>
+            Run{" "}
+            <code className="bg-blue-100 px-2 py-0.5 rounded font-mono">
+              docker-compose up -d
+            </code>{" "}
+            to start all services
+          </li>
+          <li>
+            Access istSOS4 at{" "}
+            <a href={configuration.hostname} className="underline">
+              {configuration.hostname}
+              {configuration.subpath}
+              {configuration.version ? `${configuration.version}` : ""}
+            </a>
+          </li>
+          <li>
+            Check logs with{" "}
+            <code className="bg-blue-100 px-2 py-0.5 rounded font-mono">
+              docker-compose logs -f
+            </code>
+          </li>
         </ol>
       </div>
     </div>
