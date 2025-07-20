@@ -1,4 +1,5 @@
 import React from 'react';
+import { Settings } from 'lucide-react';
 import { WizardProvider } from './components/wizard';
 import StepRenderer from './components/wizard/StepRenderer';
 import ProgressBar from './components/common/ProgressBar';
@@ -13,7 +14,7 @@ function App() {
         <div className="max-w-4xl mx-auto py-8 px-4">
           <div className="bg-white rounded-lg shadow-lg p-8">
             <h1 className="text-3xl font-bold text-center mb-8">
-              IstSOS4 Configuration Wizard
+              IstSOS4 Configurator
             </h1>
             <ProgressBar />
             <StepRenderer />

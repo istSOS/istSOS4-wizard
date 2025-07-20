@@ -11,7 +11,7 @@ function WelcomeStep() {
       <p className="text-lg text-gray-600 max-w-2xl mx-auto">
         This wizard will guide you through configuring istSOS4 for Docker deployment. 
         We'll help you set up database connections, configure data management options, 
-        and generate a ready-to-use environment file.
+        and generate a ready-to-use environment file and docker-compose file.
       </p>
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
         <h3 className="font-semibold text-blue-900 mb-2">Prerequisites:</h3>

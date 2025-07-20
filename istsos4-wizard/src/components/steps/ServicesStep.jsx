@@ -20,14 +20,36 @@ function ServicesStep() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Additional Services</h2>
-      <p className="text-gray-600">
-        Configure optional services and coordinate systems
-      </p>
+      <h2 className="text-2xl font-bold text-gray-900">Coordinate System</h2>
+
+      {/* Important Note */}
+      <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
+        <div className="flex items-start">
+          <svg
+            className="w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fillRule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <div>
+            <p className="text-sm font-medium text-blue-900 mb-1">
+              Important Note
+            </p>
+            <p className="text-sm text-blue-800">
+              Please note that the standard use WGS84 coordinate system by
+              default, nevertheless istSOS4 allows you to configure your desired
+              coordinate system to fit your specific needs.
+            </p>
+          </div>
+        </div>
+      </div>
 
       <div className="space-y-6">
-  
-
         <FormField
           label="Coordinate Reference System (EPSG)"
           error={validation.errors.epsg}
@@ -50,7 +72,7 @@ function ServicesStep() {
             </div>
           </div>
         </FormField>
-        
+
         {/* EPSG code validation */}
         {configuration.epsg && (
           <div className="bg-blue-50 border border-blue-200 rounded p-3">
@@ -63,47 +85,6 @@ function ServicesStep() {
             </p>
           </div>
         )}
-
-        {/* Common EPSG codes hints */}
-        <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded">
-          <strong>Common EPSG Codes:</strong>
-          <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2">
-            <div>
-              <p className="font-medium text-gray-700">Global:</p>
-              <ul className="ml-2 space-y-1">
-                <li>
-                  • <strong>4326</strong> - WGS 84 (GPS coordinates)
-                </li>
-                <li>
-                  • <strong>3857</strong> - Web Mercator (Google Maps)
-                </li>
-                <li>
-                  • <strong>4269</strong> - NAD83 (North America)
-                </li>
-                <li>
-                  • <strong>4258</strong> - ETRS89 (Europe)
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-medium text-gray-700">Regional:</p>
-              <ul className="ml-2 space-y-1">
-                <li>
-                  • <strong>2154</strong> - Lambert-93 (France)
-                </li>
-                <li>
-                  • <strong>27700</strong> - British National Grid (UK)
-                </li>
-                <li>
-                  • <strong>32633</strong> - UTM Zone 33N (Europe)
-                </li>
-                <li>
-                  • <strong>3035</strong> - ETRS89 LAEA (Europe)
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
 
         {/* How to find EPSG codes */}
         <div className="text-sm text-gray-600 bg-yellow-50 border border-yellow-200 rounded p-3">
@@ -143,32 +124,21 @@ function ServicesStep() {
           </ul>
         </div>
 
-        <div className="bg-gray-50 p-4 rounded-lg">
+        {/* <div className="bg-gray-50 p-4 rounded-lg">
           <h3 className="font-semibold text-gray-900 mb-3">
             Service Architecture
           </h3>
           <div className="space-y-3 text-sm text-gray-600">
-            {/* <div className="flex items-center">
-              <div
-                className={`w-4 h-4 rounded-full mr-3 ${
-                  configuration.redis === 1 ? "bg-green-500" : "bg-gray-300"
-                }`}
-              ></div>
-              <span>
-                Redis Cache{" "}
-                {configuration.redis === 1 ? "(Enabled)" : "(Disabled)"}
-              </span>
-            </div> */}
             <div className="flex items-center">
               <div className="w-4 h-4 rounded-full bg-green-500 mr-3"></div>
-              <span>PostgreSQL Database (Required)</span>
+              <span>PostgreSQL Database </span>
             </div>
             <div className="flex items-center">
               <div className="w-4 h-4 rounded-full bg-green-500 mr-3"></div>
-              <span>istSOS4 API Server (Required)</span>
+              <span>istSOS4 API Server </span>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

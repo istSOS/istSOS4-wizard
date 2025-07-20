@@ -135,7 +135,7 @@ export const validateStep = (stepNumber, configuration) => {
       fieldsToValidate = ['istsosAdmin', 'istsosAdminPassword', 'secretKey', 'accessTokenExpireMinutes' ];
       break;  
 
-    case 6: // Sample Data Configuration
+    case 6: // Simple Data Configuration
       if (configuration.dummyData === 1) {
         fieldsToValidate = ['nThings', 'nObservedProperties', 'partitionChunk'];
       }

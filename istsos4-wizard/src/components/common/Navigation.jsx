@@ -9,9 +9,9 @@ const steps = [
   { title: "Database" },
   { title: "Authorization" },
   { title: "Data Management" },
-  { title: "Sample Data" },
+  { title: "Simple Data" },
   { title: "Performance" },
-  { title: "Services" },
+  { title: "Coordinate System" },
   { title: "Review" },
   { title: "Complete" },
 ];

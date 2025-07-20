@@ -131,7 +131,7 @@ function DatabaseStep() {
         </FormField>
       </div>
 
-      <div className="border-t pt-6">
+      <div className="border-t pt-3">
         <button
           type="button"
           className="text-blue-600 hover:text-blue-800 font-medium"
@@ -141,7 +141,7 @@ function DatabaseStep() {
         </button>
 
         {showAdvanced && (
-          <div className="grid grid-cols-1 md:grid-cols-3 mb-6 gap-6 mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
             <FormField
               label="Pool Size"
               error={validation.errors.pgPoolSize}
@@ -197,10 +197,13 @@ function DatabaseStep() {
                 max="120"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 value={configuration.pgPoolTimeout}
-                 onChange={(e) => {
+                onChange={(e) => {
                   const value = e.target.value;
-                  updateConfig('pgPoolTimeout', value === '' ? '' : parseInt(value));}
-                } 
+                  updateConfig(
+                    "pgPoolTimeout",
+                    value === "" ? "" : parseInt(value)
+                  );
+                }}
                 onBlur={() => handleBlur("pgPoolTimeout")}
               />
             </FormField>

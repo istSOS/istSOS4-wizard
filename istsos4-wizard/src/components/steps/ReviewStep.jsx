@@ -412,7 +412,7 @@ ${
             <a href={configuration.hostname} className="underline">
               {configuration.hostname}
               {configuration.subpath}
-              {configuration.version ? `${configuration.version}` : ""}
+              {configuration.version ? `${configuration.version}` : ""}/docs
             </a>
           </li>
           <li>
