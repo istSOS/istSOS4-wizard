@@ -47,27 +47,27 @@ ACCESS_TOKEN_EXPIRE_MINUTES=${configuration.accessTokenExpireMinutes}
 ANONYMOUS_VIEWER=${configuration.anonymousViewer}
 
 # Data Management
-DUMMY_DATA=${configuration.dummyData}
-CLEAR_DATA=${configuration.clearData}
 VERSIONING=${configuration.versioning}
 DUPLICATES=${configuration.duplicates}
 
-# Sample Data Configuration
+# Simple Data Configuration
+DUMMY_DATA=${configuration.dummyData}
+CLEAR_DATA=${configuration.clearData}
 N_THINGS=${configuration.nThings}
 N_OBSERVED_PROPERTIES=${configuration.nObservedProperties}
 INTERVAL=${configuration.interval}
 FREQUENCY=${configuration.frequency}
 START_DATETIME=${configuration.startDatetime}
-
-# Performance Settings
-COUNT_MODE=${configuration.countMode}
-COUNT_ESTIMATE_THRESHOLD=${configuration.countEstimateThreshold}
-TOP_VALUE=${configuration.topValue}
 PARTITION_CHUNK=${configuration.partitionChunk}
 CHUNK_INTERVAL=${configuration.chunkInterval}
 
-# Additional Services
+# Performance Settings
 REDIS=${configuration.redis}
+COUNT_MODE=${configuration.countMode}
+COUNT_ESTIMATE_THRESHOLD=${configuration.countEstimateThreshold}
+TOP_VALUE=${configuration.topValue}
+
+# Coordinate System
 EPSG=${configuration.epsg}
 
 # Docker Network Configuration (if using Redis)

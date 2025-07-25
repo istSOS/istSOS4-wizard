@@ -1,5 +1,4 @@
 import React from 'react';
-import { Settings } from 'lucide-react';
 import { WizardProvider } from './components/wizard';
 import StepRenderer from './components/wizard/StepRenderer';
 import ProgressBar from './components/common/ProgressBar';
