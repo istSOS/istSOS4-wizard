@@ -48,167 +48,199 @@ function AuthorizationStep() {
   );
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">
-        Authorization Configuration
-      </h2>
-      <p className="text-gray-600">
-        Configure authentication and authorization settings for your istSOS4
-        instance.
-      </p>
+    <div className="space-y-7">
+      <div>
+        <h2 className="text-2xl font-bold text-gray-900">
+          Authorization Configuration
+        </h2>
+        <p className="text-gray-600 mt-2">
+          Configure authentication and authorization settings for your istSOS4
+          instance. Control access to your data and services.
+        </p>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-6">
-          {/* Authorization Toggle */}
-          <FormField label="Enable Authorization" fieldName="authorization">
-            <Toggle
-              checked={configuration.authorization === 1}
-              onChange={(e) =>
-                updateConfig("authorization", e.target.checked ? 1 : 0)
-              }
-              label={configuration.authorization === 1 ? "Enabled" : "Disabled"}
-            />
-          </FormField>
+      {/* Main Authorization Settings Card */}
+      <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 mb-6">
+          Authentication Settings
+        </h3>
 
-          {/* Admin Username */}
-          <FormField
-            label="Administrator Username"
-            error={validation.errors.istsosAdmin}
-            fieldName="istsosAdmin"
-            required
-          >
-            <input
-              type="text"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={configuration.istsosAdmin || ""}
-              onChange={(e) => updateConfig("istsosAdmin", e.target.value)}
-              onBlur={() => handleBlur("istsosAdmin")}
-              placeholder="admin"
-            />
-          </FormField>
-          {/* Admin Password */}
-          <FormField
-            label="Administrator Password"
-            error={validation.errors.istsosAdminPassword}
-            fieldName="istsosAdminPassword"
-            required
-            defaultValue={configuration.istsosAdminPassword || ""}
-          >
-            <div>
-              <div className="relative">
-                <input
-                  type="password"
-                  className="w-full px-3 py-2 pr-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  value={configuration.istsosAdminPassword || ""}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="space-y-6">
+            {/* Authorization Toggle */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <label className="text-sm font-medium text-gray-900">
+                    Enable Authorization
+                  </label>
+                  <p className="text-sm text-gray-600">
+                    Require authentication to access the system
+                  </p>
+                </div>
+                <Toggle
+                  checked={configuration.authorization === 1}
                   onChange={(e) =>
-                    updateConfig("istsosAdminPassword", e.target.value)
+                    updateConfig("authorization", e.target.checked ? 1 : 0)
                   }
-                  onBlur={() => handleBlur("istsosAdminPassword")}
-                  placeholder="Enter administrator password"
+                  label=""
                 />
               </div>
-
-              {/* Password strength indicator */}
-              {configuration.istsosAdminPassword && (
-                <div className="mt-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span>Password strength:</span>
-                    <span
-                      className={`font-medium ${
-                        passwordStrength.strength <= 2
-                          ? "text-red-600"
-                          : passwordStrength.strength === 3
-                          ? "text-yellow-600"
-                          : "text-green-600"
-                      }`}
-                    >
-                      {passwordStrength.label}
-                    </span>
-                  </div>
-                  <div className="mt-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full transition-all duration-300 ${
-                        passwordStrength.strength <= 2
-                          ? "bg-red-500"
-                          : passwordStrength.strength === 3
-                          ? "bg-yellow-500"
-                          : "bg-green-500"
-                      }`}
-                      style={{
-                        width: `${(passwordStrength.strength / 5) * 100}%`,
-                      }}
-                    />
-                  </div>
-                </div>
-              )}
             </div>
-          </FormField>
-        </div>
 
-        <div className="space-y-6">
-          {/* Anonymous Viewer */}
-          <FormField label="Anonymous Viewer" fieldName="anonymousViewer">
-            <Toggle
-              checked={configuration.anonymousViewer === 1}
-              onChange={(e) =>
-                updateConfig("anonymousViewer", e.target.checked ? 1 : 0)
-              }
-              label={
-                configuration.anonymousViewer === 1 ? "Enabled" : "Disabled"
-              }
-            />
-          </FormField>
-
-          {/* Access Token Expire Minutes */}
-          <FormField
-            label="Access Token Expire Minutes"
-            error={validation.errors.accessTokenExpireMinutes}
-            fieldName="accessTokenExpireMinutes"
-            required
-          >
-            <input
-              type="number"
-              min="1"
-              max="1440"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={configuration.accessTokenExpireMinutes || ""}
-              onChange={(e) => {
-                const value = e.target.value;
-                updateConfig(
-                  "accessTokenExpireMinutes",
-                  value === "" ? "" : parseInt(value)
-                );
-              }}
-              onBlur={() => handleBlur("accessTokenExpireMinutes")}
-              placeholder="5"
-            />
-          </FormField>
-          {/* Algorithm */}
-          <FormField label="Algorithm" fieldName="algorithm" required>
-            <select
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={configuration.algorithm || "HS256"}
-              onChange={(e) => updateConfig("algorithm", e.target.value)}
-              onBlur={() => handleBlur("algorithm")}
+            {/* Admin Username */}
+            <FormField
+              label="Administrator Username"
+              error={validation.errors.istsosAdmin}
+              fieldName="istsosAdmin"
+              required
             >
-              <option value="HS256">HS256</option>
-              <option value="ES256">ES256</option>
-              <option value="RS256">RS256</option>
-            </select>
-          </FormField>
+              <input
+                type="text"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                value={configuration.istsosAdmin || ""}
+                onChange={(e) => updateConfig("istsosAdmin", e.target.value)}
+                onBlur={() => handleBlur("istsosAdmin")}
+                placeholder="admin"
+              />
+            </FormField>
+
+            {/* Admin Password */}
+            <FormField
+              label="Administrator Password"
+              error={validation.errors.istsosAdminPassword}
+              fieldName="istsosAdminPassword"
+              required
+              defaultValue={configuration.istsosAdminPassword || ""}
+            >
+              <div>
+                <div className="relative">
+                  <input
+                    type="password"
+                    className="w-full px-3 py-2 pr-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    value={configuration.istsosAdminPassword || ""}
+                    onChange={(e) =>
+                      updateConfig("istsosAdminPassword", e.target.value)
+                    }
+                    onBlur={() => handleBlur("istsosAdminPassword")}
+                    placeholder="Enter administrator password"
+                  />
+                </div>
+
+                {/* Password strength indicator */}
+                {configuration.istsosAdminPassword && (
+                  <div className="mt-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span>Password strength:</span>
+                      <span
+                        className={`font-medium ${
+                          passwordStrength.strength <= 2
+                            ? "text-red-600"
+                            : passwordStrength.strength === 3
+                            ? "text-yellow-600"
+                            : "text-green-600"
+                        }`}
+                      >
+                        {passwordStrength.label}
+                      </span>
+                    </div>
+                    <div className="mt-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full transition-all duration-300 ${
+                          passwordStrength.strength <= 2
+                            ? "bg-red-500"
+                            : passwordStrength.strength === 3
+                            ? "bg-yellow-500"
+                            : "bg-green-500"
+                        }`}
+                        style={{
+                          width: `${(passwordStrength.strength / 5) * 100}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </FormField>
+          </div>
+
+          <div className="space-y-6">
+            {/* Anonymous Viewer */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <label className="text-sm font-medium text-gray-900">
+                    Anonymous Viewer
+                  </label>
+                  <p className="text-sm text-gray-600">
+                    Allow read-only access without authentication
+                  </p>
+                </div>
+                <Toggle
+                  checked={configuration.anonymousViewer === 1}
+                  onChange={(e) =>
+                    updateConfig("anonymousViewer", e.target.checked ? 1 : 0)
+                  }
+                  label=""
+                />
+              </div>
+            </div>
+
+            {/* Access Token Expire Minutes */}
+            <FormField
+              label="Access Token Expire Minutes"
+              error={validation.errors.accessTokenExpireMinutes}
+              fieldName="accessTokenExpireMinutes"
+              required
+            >
+              <input
+                type="number"
+                min="1"
+                max="1440"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                value={configuration.accessTokenExpireMinutes || ""}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  updateConfig(
+                    "accessTokenExpireMinutes",
+                    value === "" ? "" : parseInt(value)
+                  );
+                }}
+                onBlur={() => handleBlur("accessTokenExpireMinutes")}
+                placeholder="5"
+              />
+            </FormField>
+
+            {/* Algorithm */}
+            <FormField label="Algorithm" fieldName="algorithm" required>
+              <select
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                value={configuration.algorithm || "HS256"}
+                onChange={(e) => updateConfig("algorithm", e.target.value)}
+                onBlur={() => handleBlur("algorithm")}
+              >
+                <option value="HS256">HS256</option>
+                <option value="ES256">ES256</option>
+                <option value="RS256">RS256</option>
+              </select>
+            </FormField>
+          </div>
         </div>
       </div>
 
-      {/* Secret Key */}
-      <div className="space-y-6">
+      {/* Secret Key Card */}
+      <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          Security Key Configuration
+        </h3>
         <FormField
           label="Secret Key"
           error={validation.errors.secretKey}
           fieldName="secretKey"
           required
         >
-          <div className="space-y-2">
-            <div className="flex gap-2">
+          <div className="space-y-3">
+            <div className="flex gap-3">
               <input
                 type="text"
                 className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
@@ -220,7 +252,7 @@ function AuthorizationStep() {
               <button
                 type="button"
                 onClick={generateSecretKey}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 whitespace-nowrap"
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 whitespace-nowrap transition-colors"
               >
                 Generate New
               </button>
@@ -232,70 +264,21 @@ function AuthorizationStep() {
           </div>
         </FormField>
       </div>
-  
-      <div className="bg-yellow-50 border border-yellow-200  rounded-md p-2">
-        <div className="flex">
-          <div className="flex-shrink-0">
-            <svg
-              className="h-5 w-5 text-yellow-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <div className="ml-3">
-            <h3 className="text-sm font-medium text-yellow-800">
-              Important Notice
+
+      {/* Warning Banner */}
+      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+        <div className="flex items-start">
+          <div className="ml-4">
+            <h3 className="font-semibold text-yellow-900 text-base mb-2">
+              ⚠️ Important Security Notice
             </h3>
-            <div className="mt-2 text-sm text-yellow-700">
-              <p>
-                <strong>Enable Authorization</strong> and{" "}
-                <strong>Anonymous Viewer</strong> settings cannot be changed
-                once the setup is complete. Please review your choices carefully
-                before proceeding.
-              </p>
-            </div>
+            <p className="text-yellow-800 text-sm">
+              <strong>Enable Authorization</strong> settings above cannot be
+              changed once the setup is complete.
+            </p>
           </div>
         </div>
       </div>
-      {/* <div className="bg-blue-50 border border-blue-200 rounded-md -mt-4 p-4">
-        <div className="flex">
-          <div className="flex-shrink-0">
-            <svg
-              className="h-5 w-5 text-blue-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <div className="ml-3">
-            <h3 className="text-sm font-medium text-blue-800">
-              Security Best Practices
-            </h3>
-            <div className="mt-2 text-sm text-blue-700">
-              <ul className="list-disc list-inside space-y-1">
-                <li>Use a strong, randomly generated secret key</li>
-                <li>
-                  Set appropriate token expiration times for your use case
-                </li>
-                <li>Use a strong password for the administrator account</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
-   
     </div>
   );
 }
