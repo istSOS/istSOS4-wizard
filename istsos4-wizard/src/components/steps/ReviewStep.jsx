@@ -8,7 +8,7 @@ function ReviewStep() {
   const { configuration } = state;
   const [copySuccess, setCopySuccess] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
-  const [activeTab, setActiveTab] = useState("env"); // 'env' or 'docker'
+  const [activeTab, setActiveTab] = useState("env");
 
   useEffect(() => {
     // Validate entire configuration
@@ -219,64 +219,140 @@ ${
   };
 
   const ConfigurationSummary = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-      <div className="bg-gray-50 p-4 rounded-lg">
-        <h3 className="font-semibold text-gray-900 mb-3">
-          Server Configuration
-        </h3>
-        <dl className="space-y-2 text-sm">
-          <div className="flex justify-between">
-            <dt className="text-gray-600">URL:</dt>
-            <dd className="font-medium">
-              {configuration.hostname}
-              {configuration.subpath}
-            </dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-gray-600">API Version:</dt>
-            <dd className="font-medium">{configuration.version}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-gray-600">Debug Mode:</dt>
-            <dd className="font-medium">
-              {configuration.debug ? "Enabled" : "Disabled"}
-            </dd>
-          </div>
-        </dl>
-      </div>
+    <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+      <h3 className="text-lg font-semibold text-gray-900 mb-6">
+        Configuration Summary
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <h4 className="font-semibold text-blue-900 mb-3">
+            Server Configuration
+          </h4>
+          <dl className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <dt className="text-blue-700">URL:</dt>
+              <dd className="font-medium text-blue-900">
+                {configuration.hostname}
+                {configuration.externalPort &&
+                configuration.externalPort !== "80" &&
+                configuration.externalPort !== "443"
+                  ? `:${configuration.externalPort}`
+                  : ""}
+                {configuration.subpath}
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-blue-700">API Version:</dt>
+              <dd className="font-medium text-blue-900">
+                {configuration.version}
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-blue-700">Debug Mode:</dt>
+              <dd className="font-medium text-blue-900">
+                {configuration.debug ? "Enabled" : "Disabled"}
+              </dd>
+            </div>
+          </dl>
+        </div>
 
-      <div className="bg-gray-50 p-4 rounded-lg">
-        <h3 className="font-semibold text-gray-900 mb-3">
-          Database Configuration
-        </h3>
-        <dl className="space-y-2 text-sm">
-          <div className="flex justify-between">
-            <dt className="text-gray-600">Database:</dt>
-            <dd className="font-medium">{configuration.postgresDb}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-gray-600">User:</dt>
-            <dd className="font-medium">{configuration.postgresUser}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-gray-600">Pool Size:</dt>
-            <dd className="font-medium">{configuration.pgPoolSize}</dd>
-          </div>
-        </dl>
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <h4 className="font-semibold text-green-900 mb-3">
+            Database Configuration
+          </h4>
+          <dl className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <dt className="text-green-700">Database:</dt>
+              <dd className="font-medium text-green-900">
+                {configuration.postgresDb}
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-green-700">User:</dt>
+              <dd className="font-medium text-green-900">
+                {configuration.postgresUser}
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-green-700">Pool Size:</dt>
+              <dd className="font-medium text-green-900">
+                {configuration.pgPoolSize}
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+          <h4 className="font-semibold text-purple-900 mb-3">
+            Authentication Settings
+          </h4>
+          <dl className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <dt className="text-purple-700">Admin User:</dt>
+              <dd className="font-medium text-purple-900">
+                {configuration.istsosAdmin}
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-purple-700">Authorization:</dt>
+              <dd className="font-medium text-purple-900">
+                {configuration.authorization ? "Enabled" : "Disabled"}
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-purple-700">Anonymous Viewer:</dt>
+              <dd className="font-medium text-purple-900">
+                {configuration.anonymousViewer ? "Enabled" : "Disabled"}
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <h4 className="font-semibold text-amber-900 mb-3">Data Management</h4>
+          <dl className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <dt className="text-amber-700">Data Versioning:</dt>
+              <dd className="font-medium text-amber-900">
+                {configuration.versioning ? "Enabled" : "Disabled"}
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-amber-700">Duplicates Entries:</dt>
+              <dd className="font-medium text-amber-900">
+                {configuration.duplicates ? "Enabled" : "Disabled"}
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-amber-700">Simple Data:</dt>
+              <dd className="font-medium text-amber-900">
+                {configuration.dummyData ? "Enabled" : "Disabled"}
+              </dd>
+            </div>
+          </dl>
+        </div>
       </div>
     </div>
   );
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Configuration Review</h2>
+    <div className="space-y-8">
+      <div>
+        <h2 className="text-2xl font-bold text-gray-900">
+          Configuration Review
+        </h2>
+        <p className="text-gray-600 mt-2">
+          Review your configuration and download the necessary files to deploy
+          your istSOS4 instance.
+        </p>
+      </div>
 
       {hasErrors && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6 shadow-sm">
           <div className="flex items-start">
             <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 mr-3 flex-shrink-0" />
             <div>
-              <h3 className="font-semibold text-red-900 mb-2">
+              <h3 className="text-lg font-semibold text-red-900 mb-2">
                 Validation Errors Found
               </h3>
               <p className="text-red-800 text-sm mb-3">
@@ -297,36 +373,37 @@ ${
 
       <ConfigurationSummary />
 
-      <div className="bg-gray-50 p-4 rounded-lg">
-        <h3 className="font-semibold text-gray-900 mb-4">
-          Generated Configuration Files Preview
+      {/* Configuration Files Preview Card */}
+      <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 mb-6">
+          Generated Configuration Files
         </h3>
 
-        <div className="flex border-b border-gray-300 mb-4">
+        <div className="flex border-b border-gray-300 mb-6">
           <button
             onClick={() => setActiveTab("env")}
-            className={`px-4 py-2 text-sm font-medium transition-colors  ${
+            className={`px-4 py-2 text-sm font-medium transition-colors rounded-t-lg ${
               activeTab === "env"
-                ? "border-b-2 border-blue-500 text-blue-600"
-                : "text-gray-600 hover:text-gray-800"
+                ? "border-b-2 border-blue-500 text-blue-600 bg-blue-50"
+                : "text-gray-600 hover:text-gray-800 hover:bg-gray-50"
             }`}
           >
             .env File
           </button>
           <button
             onClick={() => setActiveTab("docker")}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${
+            className={`px-4 py-2 text-sm font-medium transition-colors rounded-t-lg ${
               activeTab === "docker"
-                ? "border-b-2 border-blue-500 text-blue-600"
-                : "text-gray-600 hover:text-gray-800"
+                ? "border-b-2 border-blue-500 text-blue-600 bg-blue-50"
+                : "text-gray-600 hover:text-gray-800 hover:bg-gray-50"
             }`}
           >
             docker-compose.yml
           </button>
         </div>
 
-        <div className="bg-white rounded border border-gray-300 overflow-hidden">
-          <div className="bg-gray-100 px-4 py-2 border-b border-gray-300 flex justify-between items-center">
+        <div className="bg-gray-50 rounded-lg border border-gray-300 overflow-hidden">
+          <div className="bg-gray-100 px-4 py-3 border-b border-gray-300 flex justify-between items-center">
             <span className="text-sm font-medium text-gray-700">
               {activeTab === "env" ? "istsos4.env" : "docker-compose.yml"}
             </span>
@@ -337,19 +414,19 @@ ${
                     ? copyToClipboard
                     : copyDockerComposeToClipboard
                 }
-                className="text-gray-600 hover:text-gray-800"
+                className="text-gray-600 hover:text-gray-800 p-1 rounded transition-colors"
                 title="Copy to clipboard"
               >
                 {copySuccess ? (
-                  <Check className="w-4 h-4" />
+                  <Check className="w-4 h-4 text-green-600" />
                 ) : (
                   <Copy className="w-4 h-4" />
                 )}
               </button>
             </div>
           </div>
-          <pre className="p-4 text-sm overflow-x-auto max-h-96">
-            <code>
+          <pre className="p-4 text-sm overflow-x-auto max-h-96 bg-white">
+            <code className="text-gray-800">
               {activeTab === "env"
                 ? generateEnvFile()
                 : generateDockerComposeFile()}
@@ -358,67 +435,100 @@ ${
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4">
-        <button
-          onClick={downloadEnvFile}
-          disabled={hasErrors}
-          className={`flex items-center justify-center px-6 py-3 rounded-md transition-colors ${
-            hasErrors
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-blue-600 text-white hover:bg-blue-700"
-          }`}
-        >
-          <Download className="w-5 h-5 mr-2" />
-          Download .env File
-        </button>
+      {/* Download Actions Card */}
+      <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          Download Configuration Files
+        </h3>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <button
+            onClick={downloadEnvFile}
+            disabled={hasErrors}
+            className={`flex items-center justify-center px-6 py-3 rounded-lg transition-colors ${
+              hasErrors
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+            }`}
+          >
+            <Download className="w-5 h-5 mr-2" />
+            Download .env File
+          </button>
 
-        <button
-          onClick={downloadDockerCompose}
-          disabled={hasErrors}
-          className={`flex items-center justify-center px-6 py-3 rounded-md transition-colors ${
-            hasErrors
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-green-600 text-white hover:bg-green-700"
-          }`}
-        >
-          <Download className="w-5 h-5 mr-2" />
-          Download Docker Compose File
-        </button>
+          <button
+            onClick={downloadDockerCompose}
+            disabled={hasErrors}
+            className={`flex items-center justify-center px-6 py-3 rounded-lg transition-colors ${
+              hasErrors
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-green-600 text-white hover:bg-green-700 shadow-sm"
+            }`}
+          >
+            <Download className="w-5 h-5 mr-2" />
+            Download Docker Compose File
+          </button>
+        </div>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h3 className="font-semibold text-blue-900 mb-2">Next Steps:</h3>
-        <ol className="text-sm text-blue-800 space-y-2 list-decimal list-inside">
+      {/* Next Steps Card */}
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+        <h3 className="text-lg font-semibold text-blue-900 mb-4">Next Steps</h3>
+        <ol className="text-sm text-blue-800 space-y-3 list-decimal list-inside">
           <li>
-            Save both the{" "}
-            <code className="bg-blue-100 px-2 py-0.5 rounded font-mono">
+            Clone the istSOS4 repository to get started:
+            <div className="mt-2 bg-blue-100 p-3 rounded font-mono text-blue-900 text-xs">
+              git clone https://github.com/istSOS/istsos4.git
+              <br />
+              cd istsos4
+            </div>
+          </li>
+          <li>
+            Replace existing{" "}
+            <code className="bg-blue-100 px-2 py-1 rounded font-mono text-blue-900">
               .env
             </code>{" "}
             and{" "}
-            <code className="bg-blue-100 px-2 py-0.5 rounded font-mono">
+            <code className="bg-blue-100 px-2 py-1 rounded font-mono text-blue-900">
               docker-compose.yml
             </code>{" "}
-            files in your istSOS4 project directory
+            files with the newly generated files in your project. directory
           </li>
-          <li>Ensure Docker and Docker Compose are installed</li>
+          <li>
+            Ensure Docker and Docker Compose are installed on your system.
+          </li>
           <li>
             Run{" "}
-            <code className="bg-blue-100 px-2 py-0.5 rounded font-mono">
+            <code className="bg-blue-100 px-2 py-1 rounded font-mono text-blue-900">
               docker-compose up -d
             </code>{" "}
-            to start all services
+            to start all services in detached mode.
           </li>
           <li>
-            Access istSOS4 at{" "}
-            <a href={configuration.hostname} className="underline">
+            Access istSOS4 API documentation at{" "}
+            <a
+              href={`${configuration.hostname}${
+                configuration.externalPort &&
+                configuration.externalPort !== "80" &&
+                configuration.externalPort !== "443"
+                  ? `:${configuration.externalPort}`
+                  : ""
+              }${configuration.subpath}${configuration.version}/docs`}
+              className="underline hover:text-blue-900 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {configuration.hostname}
+              {configuration.externalPort &&
+              configuration.externalPort !== "80" &&
+              configuration.externalPort !== "443"
+                ? `:${configuration.externalPort}`
+                : ""}
               {configuration.subpath}
-              {configuration.version ? `${configuration.version}` : ""}/docs
+              {configuration.version}/docs
             </a>
           </li>
           <li>
-            Check logs with{" "}
-            <code className="bg-blue-100 px-2 py-0.5 rounded font-mono">
+            Track application logs and troubleshoot issues using{" "}
+            <code className="bg-blue-100 px-2 py-1 rounded font-mono text-blue-900">
               docker-compose logs -f
             </code>
           </li>
