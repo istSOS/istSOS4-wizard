@@ -25,6 +25,7 @@ function ReviewStep() {
 
 # Basic Server Configuration
 HOSTNAME=${configuration.hostname}
+EXTERNAL_PORT=${configuration.externalPort}
 SUBPATH=${configuration.subpath}
 VERSION=${configuration.version}
 DEBUG=${configuration.debug}
@@ -139,7 +140,7 @@ ${
   api:
     image: ghcr.io/istsos/istsos4/api:1.9
     environment:
-      HOSTNAME: \${HOSTNAME}
+      HOSTNAME: \${HOSTNAME}:\${EXTERNAL_PORT}
       SUBPATH: \${SUBPATH}
       VERSION: \${VERSION}
       DEBUG: \${DEBUG}
@@ -176,7 +177,7 @@ ${
     command: python3 generator.py
     working_dir: /dummy_data
     environment:
-      HOSTNAME: \${HOSTNAME}
+      HOSTNAME: \${HOSTNAME}:\${EXTERNAL_PORT}
       SUBPATH: \${SUBPATH}
       VERSION: \${VERSION}
       VERSIONING: \${VERSIONING}

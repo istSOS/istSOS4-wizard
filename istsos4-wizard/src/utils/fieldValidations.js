@@ -6,6 +6,11 @@ export const fieldValidations = {
     ValidationRules.required,
     ValidationRules.url
   ],
+  externalPort: [
+    ValidationRules.required,
+    ValidationRules.minValue(1024),
+    ValidationRules.maxValue(49151)
+  ],
   subpath: [
     ValidationRules.required,
     ValidationRules.pattern(/^\/[a-zA-Z0-9_-]+$/, 'Must start with / and contain only letters, numbers, hyphens, and underscores')
@@ -120,7 +125,7 @@ export const validateStep = (stepNumber, configuration) => {
 
   switch (stepNumber) {
     case 2: // Basic Server Configuration
-      fieldsToValidate = ['hostname', 'subpath'];
+      fieldsToValidate = ['hostname', 'externalPort', 'subpath'];
       break;
 
     case 3: // Database Configuration
@@ -128,7 +133,7 @@ export const validateStep = (stepNumber, configuration) => {
       // Include advanced fields if shown
       if (configuration.showAdvanced) {
         fieldsToValidate.push('pgPoolSize', 'pgMaxOverflow', 'pgPoolTimeout');
-      }
+      } 
       break;
      
     case 4: // Authentication Configuration

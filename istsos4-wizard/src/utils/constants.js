@@ -11,7 +11,8 @@ export const initialState = {
   // Configuration object
   configuration: {
     // Basic Server Configuration
-    hostname: 'http://localhost:8018',
+    hostname: 'http://localhost',
+    externalPort: 8018,
     subpath: '/istsos4',
     version: '/v1.1',
     debug: 0,
