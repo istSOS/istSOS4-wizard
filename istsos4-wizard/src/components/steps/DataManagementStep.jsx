@@ -210,13 +210,13 @@ function DataManagementStep() {
           </button>
 
           {showDuplicatesInfo && (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-5">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
                 <div>
-                  <h4 className="font-semibold text-green-900 mb-3">
+                  <h4 className="font-semibold text-blue-900 mb-3">
                     Use Cases
                   </h4>
-                  <ul className="space-y-2 text-green-800">
+                  <ul className="space-y-2 text-blue-800">
                     <li className="flex items-start">
                       <svg
                         className="w-4 h-4 text-green-600 mt-0.5 mr-2 flex-shrink-0"

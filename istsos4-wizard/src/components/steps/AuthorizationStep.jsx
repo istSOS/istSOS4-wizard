@@ -97,7 +97,7 @@ function AuthorizationStep() {
             >
               <input
                 type="text"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 value={configuration.istsosAdmin || ""}
                 onChange={(e) => updateConfig("istsosAdmin", e.target.value)}
                 onBlur={() => handleBlur("istsosAdmin")}
@@ -117,7 +117,7 @@ function AuthorizationStep() {
                 <div className="relative">
                   <input
                     type="password"
-                    className="w-full px-3 py-2 pr-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 pr-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     value={configuration.istsosAdminPassword || ""}
                     onChange={(e) =>
                       updateConfig("istsosAdminPassword", e.target.value)
@@ -197,7 +197,7 @@ function AuthorizationStep() {
                 type="number"
                 min="1"
                 max="1440"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 value={configuration.accessTokenExpireMinutes || ""}
                 onChange={(e) => {
                   const value = e.target.value;
@@ -214,7 +214,7 @@ function AuthorizationStep() {
             {/* Algorithm */}
             <FormField label="Algorithm" fieldName="algorithm" required>
               <select
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 value={configuration.algorithm || "HS256"}
                 onChange={(e) => updateConfig("algorithm", e.target.value)}
                 onBlur={() => handleBlur("algorithm")}
@@ -243,7 +243,7 @@ function AuthorizationStep() {
             <div className="flex gap-3">
               <input
                 type="text"
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500 font-mono text-sm"
                 value={configuration.secretKey || ""}
                 onChange={(e) => updateConfig("secretKey", e.target.value)}
                 onBlur={() => handleBlur("secretKey")}
@@ -252,7 +252,7 @@ function AuthorizationStep() {
               <button
                 type="button"
                 onClick={generateSecretKey}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 whitespace-nowrap transition-colors"
+                className="px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-md hover:from-green-700 hover:to-emerald-700 focus:ring-2 focus:ring-green-500 whitespace-nowrap transition-colors shadow-lg hover:shadow-xl"
               >
                 Generate New
               </button>

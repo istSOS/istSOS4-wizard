@@ -62,7 +62,7 @@ function DatabaseStep() {
           >
             <input
               type="text"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
               value={configuration.postgresDb}
               onChange={(e) => updateConfig("postgresDb", e.target.value)}
               onBlur={() => handleBlur("postgresDb")}
@@ -257,7 +257,7 @@ function DatabaseStep() {
                     onBlur={() => handleBlur("pgPoolTimeout")}
                   />
                   <p className="text-xs text-gray-500 mt-1">
-                   Wait Time for connection (10-120 seconds)
+                    Wait Time for connection (10-120 seconds)
                   </p>
                 </FormField>
               </div>

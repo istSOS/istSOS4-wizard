@@ -2,13 +2,13 @@ import React from "react";
 
 function WelcomeStep() {
   return (
-    <div className="bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-5">
+    <div className="bg-gradient-to-br from-green-600/5 via-white to-emerald-600/5 flex items-center justify-center p-5">
       <div className="max-w-4xl w-full text-center space-y-6">
         {/* Logo Section */}
         <div className="flex justify-center mb-8">
           <div className="relative">
-            <div className="absolute inset-0 bg-blue-600 rounded-full blur-xl opacity-20 scale-110"></div>
-            <div className="relative w-16 h-16 mx-auto bg-gradient-to-br mt-3 from-blue-500 to-indigo-600 rounded-full flex items-center justify-center drop-shadow-lg">
+            <div className="absolute inset-0 bg-green-600 rounded-full blur-xl opacity-20 scale-110"></div>
+            <div className="relative w-16 h-16 mx-auto bg-gradient-to-br mt-3 from-green-500 to-emerald-600 rounded-full flex items-center justify-center drop-shadow-lg">
               <svg
                 className="w-12 h-12 text-white"
                 fill="none"
@@ -34,7 +34,7 @@ function WelcomeStep() {
 
         {/* Welcome Content */}
         <div className="space-y-5">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
             Welcome to istSOS4
           </h1>
           <h2 className="text-2xl font-semibold text-gray-700">
@@ -51,9 +51,9 @@ function WelcomeStep() {
         {/* Features Grid */}
         <div className="grid md:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto">
           <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mx-auto mb-4">
               <svg
-                className="w-6 h-6 text-blue-600"
+                className="w-6 h-6 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -76,9 +76,9 @@ function WelcomeStep() {
           </div>
 
           <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-3">
               <svg
-                className="w-6 h-6 text-green-600"
+                className="w-6 h-6 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -98,9 +98,9 @@ function WelcomeStep() {
           </div>
 
           <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-700 rounded-lg flex items-center justify-center mx-auto mb-4">
               <svg
-                className="w-6 h-6 text-purple-600"
+                className="w-6 h-6 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -143,7 +143,7 @@ function WelcomeStep() {
           <div className="grid md:grid-cols-3 gap-4 text-sm">
             <div className="flex items-center text-blue-800">
               <svg
-                className="w-4 h-4 mr-2 text-green-600"
+                className="w-4 h-4 mr-2 text-blue-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -159,7 +159,7 @@ function WelcomeStep() {
             </div>
             <div className="flex items-center text-blue-800">
               <svg
-                className="w-4 h-4 mr-2 text-green-600"
+                className="w-4 h-4 mr-2 text-blue-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -175,7 +175,7 @@ function WelcomeStep() {
             </div>
             <div className="flex items-center text-blue-800">
               <svg
-                className="w-4 h-4 mr-2 text-green-600"
+                className="w-4 h-4 mr-2 text-blue-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -193,10 +193,10 @@ function WelcomeStep() {
         </div>
 
         {/* Privacy & Security Notice */}
-        <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-xl p-4 max-w-2xl mx-auto">
+        <div className="bg-gradient-to-r from-emerald-600/10 to-green-600/10 border border-emerald-300 rounded-xl p-4 max-w-2xl mx-auto">
           <div className="flex items-center justify-center mb-2">
             <svg
-              className="w-5 h-5 text-emerald-600 mr-2"
+              className="w-5 h-5 text-green-600 mr-2"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -208,12 +208,12 @@ function WelcomeStep() {
                 d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
               />
             </svg>
-            <h3 className="font-semibold text-emerald-900">
+            <h3 className="font-semibold text-green-800">
               100% Risk-Free & Private
             </h3>
           </div>
           <div className="text-center">
-            <p className="text-emerald-700 text-sm">
+            <p className="text-green-700 text-sm">
               All data stays locally on your device - no external servers or
               data collection
             </p>

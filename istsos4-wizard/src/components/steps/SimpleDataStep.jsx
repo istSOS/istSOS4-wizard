@@ -172,7 +172,7 @@ function SimpleDataStep() {
                   type="number"
                   min="1"
                   max="100"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
                   value={configuration.nThings}
                   onChange={(e) => {
                     const value = e.target.value;
@@ -257,8 +257,6 @@ function SimpleDataStep() {
                 </select>
               </FormField>
             </div>
-
-    
           </div>
 
           {/* Advanced Settings Card */}

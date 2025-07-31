@@ -13,7 +13,6 @@ const steps = [
   { title: "Performance" },
   { title: "Coordinate System" },
   { title: "Review" },
-  { title: "Complete" },
 ];
 
 function Navigation() {
@@ -29,6 +28,7 @@ function Navigation() {
 
   const canGoNext = state.currentStep < state.totalSteps;
   const canGoPrev = state.currentStep > 1;
+  const isCompletionStep = state.currentStep === state.totalSteps;
 
   const handleNext = () => {
     dispatch({ type: "NEXT_STEP" });
@@ -60,7 +60,7 @@ function Navigation() {
         disabled={!canGoPrev}
         className={`flex items-center px-4 py-2 rounded-md transition-colors ${
           canGoPrev
-            ? "bg-gray-200 hover:bg-gray-300 text-gray-700"
+            ? "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl"
             : "bg-gray-100 text-gray-400 cursor-not-allowed"
         }`}
       >
@@ -83,13 +83,24 @@ function Navigation() {
         <div className="relative">
           <button
             onClick={handleReset}
-            className={`p-2 rounded-md transition-colors ${
+            className={`${
+              isCompletionStep ? "px-4 py-2 flex items-center" : "p-2"
+            } rounded-md transition-colors ${
               showResetConfirm
                 ? "bg-red-600 text-white"
+                : isCompletionStep
+                ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg hover:shadow-xl"
                 : "bg-gray-100 hover:bg-gray-200 text-gray-600"
             }`}
           >
-            <RotateCcw className="w-4 h-4" />
+            {isCompletionStep ? (
+              <>
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Start New Configuration
+              </>
+            ) : (
+              <RotateCcw className="w-4 h-4" />
+            )}
           </button>
 
           {showResetWarning && showResetConfirm && (
@@ -122,18 +133,20 @@ function Navigation() {
           )}
         </div>
 
-        <button
-          onClick={handleNext}
-          disabled={!canGoNext}
-          className={`flex items-center px-4 py-2 rounded-md transition-colors ${
-            canGoNext
-              ? "bg-blue-600 hover:bg-blue-700 text-white"
-              : "bg-gray-100 text-gray-400 cursor-not-allowed"
-          }`}
-        >
-          Next
-          <ChevronRight className="w-4 h-4 ml-1" />
-        </button>
+        {!isCompletionStep && (
+          <button
+            onClick={handleNext}
+            disabled={!canGoNext}
+            className={`flex items-center px-4 py-2 rounded-md transition-colors ${
+              canGoNext
+                ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg hover:shadow-xl"
+                : "bg-gray-100 text-gray-400 cursor-not-allowed"
+            }`}
+          >
+            Next
+            <ChevronRight className="w-4 h-4 ml-1" />
+          </button>
+        )}
       </div>
     </div>
   );

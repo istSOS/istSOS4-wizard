@@ -4,8 +4,8 @@ import { Check, BookOpen, ExternalLink } from "lucide-react";
 function CompletionStep() {
   return (
     <div className="text-center space-y-8">
-      <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-        <Check className="w-8 h-8 text-green-600" />
+      <div className="mx-auto w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
+        <Check className="w-8 h-8 text-white" />
       </div>
       <h2 className="text-3xl font-bold text-gray-900">
         Configuration Complete!
@@ -18,16 +18,16 @@ function CompletionStep() {
 
       <div className="grid md:grid-cols-1 gap-6 max-w-2xl mx-auto">
         {/* Resources Section */}
-        <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-          <h3 className="font-semibold text-green-900 mb-4 flex items-center justify-center">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
+          <h3 className="font-semibold text-blue-900 mb-4 flex items-center justify-center">
             <BookOpen className="w-5 h-5 mr-2" />
             Resources & Documentation
           </h3>
-          <ul className="text-sm text-green-800 space-y-3">
+          <ul className="text-sm text-blue-800 space-y-3">
             <li className="bg-white/50 p-3 rounded flex justify-center">
               <a
                 href="https://istsos.org/foss4g-asia/tutorial/tutorial_index/"
-                className="flex items-center text-green-700 hover:text-green-900 hover:underline transition-colors"
+                className="flex items-center text-blue-700 hover:text-blue-900 hover:underline transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -38,7 +38,7 @@ function CompletionStep() {
             <li className="bg-white/50 p-3 rounded flex justify-center">
               <a
                 href="https://docs.docker.com/compose/"
-                className="flex items-center text-green-700 hover:text-green-900 hover:underline transition-colors"
+                className="flex items-center text-blue-700 hover:text-blue-900 hover:underline transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -49,7 +49,7 @@ function CompletionStep() {
             <li className="bg-white/50 p-3 rounded flex justify-center">
               <a
                 href="https://github.com/istSOS/istSOS4/discussions"
-                className="flex items-center text-green-700 hover:text-green-900 hover:underline transition-colors"
+                className="flex items-center text-blue-700 hover:text-blue-900 hover:underline transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -88,9 +88,8 @@ function CompletionStep() {
             Configuration Wizard Development
           </p>
           <p className="text-sm text-purple-800 italic mb-2">
-            <span className="font-semibold">Rahull004</span>. "istSOS4 Configuration
-            Wizard" GitHub repository,
-            2025. Available:
+            <span className="font-semibold">Rahull004</span>. "istSOS4
+            Configuration Wizard" GitHub repository, 2025. Available:
             <a
               href="https://github.com/Rahull004/istSOS4-wizard"
               className="text-purple-600 hover:text-purple-800 underline ml-1"
@@ -102,9 +101,14 @@ function CompletionStep() {
           </p>
           <p className="text-xs text-purple-700">
             Developed through{" "}
-            <span className="font-bold text-purple-900 bg-purple-100 px-2 py-1 rounded">
+            <a
+              href="https://summerofcode.withgoogle.com/programs/2025"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-purple-900 bg-purple-100 px-2 py-1 rounded hover:bg-purple-200 transition-colors"
+            >
               Google Summer of Code 2025
-            </span>{" "}
+            </a>{" "}
             program
           </p>
         </div>

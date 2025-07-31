@@ -155,7 +155,7 @@ function BasicServerStep() {
       </div>
 
       {/* Server URL Preview Card */}
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6">
         <h3 className="text-lg font-semibold text-blue-900 mb-4">
           Server URL Preview
         </h3>
@@ -165,15 +165,12 @@ function BasicServerStep() {
           </div>
           <div className="text-lg font-mono text-blue-900 break-all">
             {configuration.hostname}
-            {configuration.externalPort &&
-               `:${configuration.externalPort}`
-              }
+            {configuration.externalPort && `:${configuration.externalPort}`}
             {configuration.subpath}
             {configuration.version}
           </div>
         </div>
       </div>
-
     </div>
   );
 }
