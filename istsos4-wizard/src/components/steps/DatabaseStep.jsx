@@ -86,7 +86,7 @@ function DatabaseStep() {
             />
           </FormField>
 
-          <div className="md:col-span-2">
+          <div className="">
             <FormField
               label="Password"
               error={validation.errors.postgresPassword}

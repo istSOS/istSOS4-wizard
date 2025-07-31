@@ -49,7 +49,7 @@ function Navigation() {
       setTimeout(() => {
         setShowResetConfirm(false);
         setShowResetWarning(false);
-      }, 5000);
+      }, 3000);
     }
   };
 
