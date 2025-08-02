@@ -266,15 +266,20 @@ function AuthorizationStep() {
       </div>
 
       {/* Warning Banner */}
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
         <div className="flex items-start">
-          <div className="ml-4">
-            <h3 className="font-semibold text-yellow-900 text-base mb-2">
-              ⚠️ Important Security Notice
-            </h3>
+          <span className="text-amber-600 text-lg mr-2">*</span>
+          <div>
+            <h4 className="text-sm font-medium text-amber-900 mb-1">
+              Security Notice
+            </h4>
             <p className="text-yellow-800 text-sm">
               <strong>Enable Authorization</strong> settings above cannot be
               changed once the setup is complete.
+            </p>
+            <p className="text-sm text-amber-800">
+              <strong>Password</strong> fields are not saved for security. When you reopen the
+              wizard, you will need to enter passwords again.
             </p>
           </div>
         </div>

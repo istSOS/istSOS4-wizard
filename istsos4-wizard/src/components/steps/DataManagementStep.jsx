@@ -317,13 +317,14 @@ function DataManagementStep() {
       </div>
 
       {/* Warning Banner */}
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+       <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
         <div className="flex items-start">
-          <div className="ml-2">
-            <h3 className="font-semibold text-amber-900 text-base mb-2">
-              ⚠️ Permanent Configuration Settings
-            </h3>
-            <p className="text-amber-800 text-sm">
+          <span className="text-amber-600 text-lg mr-2">*</span>
+          <div>
+            <h4 className="text-sm font-medium text-amber-900 mb-1">
+                Permanent Configuration Settings
+            </h4>
+            <p className="text-sm text-amber-800">
               The data management settings above are <strong>permanent</strong>{" "}
               and cannot be modified after setup completion.
             </p>

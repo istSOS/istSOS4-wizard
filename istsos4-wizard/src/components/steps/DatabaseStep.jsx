@@ -86,63 +86,61 @@ function DatabaseStep() {
             />
           </FormField>
 
-          <div className="">
-            <FormField
-              label="Password"
-              error={validation.errors.postgresPassword}
-              fieldName="postgresPassword"
-              required
-            >
-              <div>
-                <div className="relative">
-                  <input
-                    type="password"
-                    className="w-full px-3 py-2 pr-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    value={configuration.postgresPassword}
-                    onChange={(e) =>
-                      updateConfig("postgresPassword", e.target.value)
-                    }
-                    onBlur={() => handleBlur("postgresPassword")}
-                    placeholder="Enter secure password"
-                  />
-                </div>
-
-                {/* Password strength indicator */}
-                {configuration.postgresPassword && (
-                  <div className="mt-2">
-                    <div className="flex items-center justify-between text-xs">
-                      <span>Password strength:</span>
-                      <span
-                        className={`font-medium ${
-                          passwordStrength.strength <= 2
-                            ? "text-red-600"
-                            : passwordStrength.strength === 3
-                            ? "text-yellow-600"
-                            : "text-green-600"
-                        }`}
-                      >
-                        {passwordStrength.label}
-                      </span>
-                    </div>
-                    <div className="mt-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full transition-all duration-300 ${
-                          passwordStrength.strength <= 2
-                            ? "bg-red-500"
-                            : passwordStrength.strength === 3
-                            ? "bg-yellow-500"
-                            : "bg-green-500"
-                        }`}
-                        style={{
-                          width: `${(passwordStrength.strength / 5) * 100}%`,
-                        }}
-                      />
-                    </div>
-                  </div>
-                )}
+          <FormField
+            label="Password"
+            error={validation.errors.postgresPassword}
+            fieldName="postgresPassword"
+            required
+          >
+            <div>
+              <div className="relative">
+                <input
+                  type="password"
+                  className="w-full px-3 py-2 pr-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value={configuration.postgresPassword}
+                  onChange={(e) =>
+                    updateConfig("postgresPassword", e.target.value)
+                  }
+                  onBlur={() => handleBlur("postgresPassword")}
+                  placeholder="Enter secure password"
+                />
               </div>
-            </FormField>
-          </div>
+
+              {/* Password strength indicator */}
+              {configuration.postgresPassword && (
+                <div className="mt-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span>Password strength:</span>
+                    <span
+                      className={`font-medium ${
+                        passwordStrength.strength <= 2
+                          ? "text-red-600"
+                          : passwordStrength.strength === 3
+                          ? "text-yellow-600"
+                          : "text-green-600"
+                      }`}
+                    >
+                      {passwordStrength.label}
+                    </span>
+                  </div>
+                  <div className="mt-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full transition-all duration-300 ${
+                        passwordStrength.strength <= 2
+                          ? "bg-red-500"
+                          : passwordStrength.strength === 3
+                          ? "bg-yellow-500"
+                          : "bg-green-500"
+                      }`}
+                      style={{
+                        width: `${(passwordStrength.strength / 5) * 100}%`,
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </FormField>
         </div>
       </div>
 
@@ -263,6 +261,22 @@ function DatabaseStep() {
               </div>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Security Notice */}
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+        <div className="flex items-start">
+          <span className="text-amber-600 text-lg mr-2">*</span>
+          <div>
+            <h4 className="text-sm font-medium text-amber-900 mb-1">
+              Security Notice
+            </h4>
+            <p className="text-sm text-amber-800">
+              <strong>Password</strong> fields are not saved for security. When you reopen the
+              wizard, you will need to enter passwords again.
+            </p>
+          </div>
         </div>
       </div>
     </div>

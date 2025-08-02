@@ -213,6 +213,18 @@ ${
     }
   };
 
+  const copyGitCommands = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        "git clone https://github.com/istSOS/istsos4.git\ncd istsos4"
+      );
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
+
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(generateEnvFile());
@@ -480,7 +492,20 @@ ${
         <ol className="text-sm text-blue-800 space-y-3 list-decimal list-inside">
           <li>
             Clone the istSOS4 repository to get started:
-            <div className="mt-2 bg-blue-100 p-3 rounded font-mono text-blue-900 text-xs">
+            <div className="mt-2 bg-blue-100 p-3 rounded font-mono text-blue-900 text-xs relative">
+              <div className="absolute top-2 right-2">
+                <button
+                  onClick={copyGitCommands}
+                  className="text-blue-700 hover:text-blue-900 p-1 rounded transition-colors bg-blue-200 hover:bg-blue-300"
+                  title="Copy commands"
+                >
+                  {copySuccess ? (
+                    <Check className="w-3 h-3 text-green-700" />
+                  ) : (
+                    <Copy className="w-3 h-3" />
+                  )}
+                </button>
+              </div>
               git clone https://github.com/istSOS/istsos4.git
               <br />
               cd istsos4
