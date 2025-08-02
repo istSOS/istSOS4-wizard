@@ -3,7 +3,7 @@ import { useWizard } from "../../hooks/useWizard";
 import FormField from "../common/FormField";
 import Toggle from "../common/Toggle";
 
-function SimpleDataStep() {
+function sampleDataStep() {
   const { state, dispatch } = useWizard();
   const { configuration, validation } = state;
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -17,24 +17,6 @@ function SimpleDataStep() {
 
   const handleBlur = (field) => {
     dispatch({ type: "SET_FIELD_TOUCHED", payload: field });
-  };
-
-  const getDateTimeValue = () => {
-    if (!configuration.startDatetime) return "";
-
-    try {
-      if (configuration.startDatetime.includes("T")) {
-        return configuration.startDatetime.slice(0, 19);
-      }
-      const date = new Date(configuration.startDatetime);
-      if (!isNaN(date.getTime())) {
-        return date.toISOString().slice(0, 19);
-      }
-    } catch (error) {
-      console.warn("Invalid datetime format:", configuration.startDatetime);
-    }
-
-    return "";
   };
 
   const calculateDataPoints = () => {
@@ -68,7 +50,7 @@ function SimpleDataStep() {
     <div className="space-y-8">
       <div>
         <h2 className="text-2xl font-bold text-gray-900">
-          Simple Data Configuration
+          Sample Data Configuration
         </h2>
         <p className="text-gray-600 mt-2">
           Configure data initialization and test data generation options for
@@ -90,7 +72,7 @@ function SimpleDataStep() {
                   Generate Test Data
                 </label>
                 <p className="text-sm text-gray-600">
-                  Automatically populate the database with simple sensor data
+                  Automatically populate the database with sample sensor data
                   for testing
                 </p>
               </div>
@@ -207,55 +189,115 @@ function SimpleDataStep() {
                 />
               </FormField>
 
-              <FormField label="Start Date/Time">
-                <input
-                  type="datetime-local"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  value={getDateTimeValue()}
-                  onChange={(e) => {
-                    const rawValue = e.target.value;
-                    let formattedValue = "";
-                    if (rawValue) {
-                      if (rawValue.length === 16) {
-                        formattedValue = rawValue + ":00.000+01:00";
-                      } else if (rawValue.length === 19) {
-                        formattedValue = rawValue + ".000+01:00";
-                      } else {
-                        formattedValue = rawValue;
-                      }
-                    }
-                    updateConfig("startDatetime", formattedValue);
-                  }}
-                  onBlur={() => handleBlur("startDatetime")}
-                  step="1"
-                />
+              <FormField
+                label="Start Date/Time"
+                error={validation.errors.baseDatetime}
+                fieldName={"baseDatetime"}
+              >
+                <div className="space-y-3">
+                  <input
+                    type="datetime-local"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    value={configuration.baseDatetime || ""}
+                    onChange={(e) => {
+                      updateConfig("baseDatetime", e.target.value);
+                    }}
+                    onBlur={() => handleBlur("baseDatetime")}
+                    step="1"
+                  />
+
+                  {/* Milliseconds Input */}
+                  <FormField
+                    label="Milliseconds"
+                    error={validation.errors.milliseconds}
+                    fieldName="milliseconds"
+                  >
+                    <input
+                      type="text"
+                      placeholder="000"
+                      maxLength="3"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      value={configuration.milliseconds || ""}
+                      onChange={(e) => {
+                        updateConfig("milliseconds", e.target.value);
+                      }}
+                      onBlur={() => {
+                        handleBlur("milliseconds");
+                      }}
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Enter milliseconds (000-999)
+                    </p>
+                  </FormField>
+
+                  <FormField
+                    label="Timezone Offset"
+                    error={validation.errors.timezoneOffset}
+                    fieldName="timezoneOffset"
+                  >
+                    <input
+                      type="text"
+                      placeholder="+01:00"
+                      maxLength="6"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      value={configuration.timezoneOffset || ""}
+                      onChange={(e) => {
+                        updateConfig("timezoneOffset", e.target.value);
+                      }}
+                      onBlur={() => {
+                        handleBlur("timezoneOffset");
+                      }}
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Enter timezone offset (e.g., +00:00, +05:30, -08:00)
+                    </p>
+                  </FormField>
+
+                  {/* Preview of formatted datetime */}
+                  <div className="bg-gray-50 border border-gray-200 rounded-md p-2">
+                    <p className="text-xs text-gray-600">
+                      <span className="font-medium">Final format:</span>{" "}
+                      {configuration.baseDatetime
+                        ? configuration.baseDatetime +
+                          "." +
+                          (configuration.milliseconds || "000").padStart(
+                            3,
+                            "0"
+                          ) +
+                          (configuration.timezoneOffset || "+01:00")
+                        : "Select date and time above"}
+                    </p>
+                  </div>
+                </div>
               </FormField>
 
-              <FormField label="Data Generation Period">
-                <select
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  value={configuration.interval}
-                  onChange={(e) => updateConfig("interval", e.target.value)}
-                >
-                  <option value="P1D">1 Day</option>
-                  <option value="P1W">1 Week</option>
-                  <option value="P1M">1 Month</option>
-                  <option value="P1Y">1 Year</option>
-                </select>
-              </FormField>
+              <div className="space-y-6">
+                <FormField label="Data Generation Period">
+                  <select
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    value={configuration.interval}
+                    onChange={(e) => updateConfig("interval", e.target.value)}
+                  >
+                    <option value="P1D">1 Day</option>
+                    <option value="P1W">1 Week</option>
+                    <option value="P1M">1 Month</option>
+                    <option value="P1Y">1 Year</option>
+                  </select>
+                </FormField>
 
-              <FormField label="Sampling Frequency" fieldName="frequency">
-                <select
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  value={configuration.frequency}
-                  onChange={(e) => updateConfig("frequency", e.target.value)}
-                >
-                  <option value="PT1M">Every minute</option>
-                  <option value="PT5M">Every 5 minutes</option>
-                  <option value="PT15M">Every 15 minutes</option>
-                  <option value="PT1H">Every hour</option>
-                </select>
-              </FormField>
+                <FormField label="Sampling Frequency" fieldName="frequency">
+                  <select
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    value={configuration.frequency}
+                    onChange={(e) => updateConfig("frequency", e.target.value)}
+                  >
+                    <option value="PT1M">Every minute</option>
+                    <option value="PT5M">Every 5 minutes</option>
+                    <option value="PT15M">Every 15 minutes</option>
+                    <option value="PT1H">Every hour</option>
+                  </select>
+                </FormField>
+              </div>
             </div>
           </div>
 
@@ -391,4 +433,4 @@ function SimpleDataStep() {
   );
 }
 
-export default SimpleDataStep;
+export default sampleDataStep;

@@ -80,6 +80,18 @@ export const fieldValidations = {
     ValidationRules.minValue(1),
     ValidationRules.maxValue(10)
   ],
+  baseDatetime: [
+    ValidationRules.required,
+  ],
+  milliseconds: [
+    ValidationRules.required,
+    ValidationRules.pattern(/^\d{0,3}$/, 'Must be 0-3 digits only'),
+    ValidationRules.pattern(/^(|[0-9]{1,3})$/, 'Must be between 000-999')
+  ],
+  timezoneOffset: [
+    ValidationRules.required,
+    ValidationRules.pattern(/^[+-]([0-1][0-9]|2[0-3]):[0-5][0-9]$/, 'Use format ±HH:MM')
+  ],
   partitionChunk: [
     ValidationRules.minValue(1000),
     ValidationRules.maxValue(50000)
@@ -133,16 +145,16 @@ export const validateStep = (stepNumber, configuration) => {
       // Include advanced fields if shown
       if (configuration.showAdvanced) {
         fieldsToValidate.push('pgPoolSize', 'pgMaxOverflow', 'pgPoolTimeout');
-      } 
+      }
       break;
-     
-    case 4: // Authentication Configuration
-      fieldsToValidate = ['istsosAdmin', 'istsosAdminPassword', 'secretKey', 'accessTokenExpireMinutes' ];
-      break;  
 
-    case 6: // Simple Data Configuration
+    case 4: // Authentication Configuration
+      fieldsToValidate = ['istsosAdmin', 'istsosAdminPassword', 'secretKey', 'accessTokenExpireMinutes'];
+      break;
+
+    case 6: // Sample Data Configuration
       if (configuration.dummyData === 1) {
-        fieldsToValidate = ['nThings', 'nObservedProperties', 'partitionChunk'];
+        fieldsToValidate = ['nThings', 'nObservedProperties', 'baseDatetime', 'milliseconds', 'timezoneOffset', 'partitionChunk'];
       }
       break;
 

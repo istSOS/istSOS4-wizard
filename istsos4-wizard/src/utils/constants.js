@@ -7,7 +7,7 @@ export const initialState = {
     touched: {},
     isValid: true
   },
-  
+
   // Configuration object
   configuration: {
     // Basic Server Configuration
@@ -16,7 +16,7 @@ export const initialState = {
     subpath: '/istsos4',
     version: '/v1.1',
     debug: 0,
-    
+
     // Database Configuration
     postgresDb: 'istsos',
     postgresUser: 'postgres',
@@ -33,20 +33,22 @@ export const initialState = {
     algorithm: 'HS256',
     accessTokenExpireMinutes: '5',
     anonymousViewer: 0,
-    
+
     // Data Management
     dummyData: 0,
     clearData: 0,
     versioning: 0,
     duplicates: 0,
-    
+
     // Sample Data
     nThings: 3,
     nObservedProperties: 2,
     interval: 'P1Y',
     frequency: 'PT5M',
-    startDatetime: new Date().toISOString().slice(0, 19) + '.000+00:00',
-    
+    baseDatetime: new Date().toISOString().slice(0, 19),
+    milliseconds: '000',
+    timezoneOffset: '+01:00',
+
     // Performance Settings
     countMode: 'FULL',
     countEstimateThreshold: 10000,
@@ -54,8 +56,8 @@ export const initialState = {
     partitionChunk: 10000,
     chunkInterval: 'P1Y',
     redis: 0,
-    
-    // Additional Services
+
+    // Coordination System
     epsg: 4326
   }
 };

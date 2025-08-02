@@ -5,7 +5,7 @@ import WelcomeStep from "../steps/WelcomeStep";
 import BasicServerStep from "../steps/BasicServerStep";
 import DatabaseStep from "../steps/DatabaseStep";
 import DataManagementStep from "../steps/DataManagementStep";
-import SimpleDataStep from "../steps/SimpleDataStep";
+import sampleDataStep from "../steps/sampleDataStep";
 import PerformanceStep from "../steps/PerformanceStep";
 import ServicesStep from "../steps/ServicesStep";
 import ReviewStep from "../steps/ReviewStep";
@@ -21,7 +21,7 @@ function StepRenderer() {
     DatabaseStep,
     AuthorizationStep,
     DataManagementStep,
-    SimpleDataStep,
+    sampleDataStep,
     PerformanceStep,
     ServicesStep,
     ReviewStep,
