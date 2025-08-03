@@ -92,14 +92,14 @@ export const fieldValidations = {
   baseDatetime: [
     ValidationRules.required,
   ],
-  milliseconds: [
-    ValidationRules.required,
-    ValidationRules.pattern(/^\d{0,3}$/, 'Must be 0-3 digits only'),
-    ValidationRules.pattern(/^(|[0-9]{1,3})$/, 'Must be between 000-999')
-  ],
+ milliseconds: [
+  ValidationRules.required,
+  ValidationRules.pattern(/^\d{1,3}$/, 'Only digits (0–999) are allowed')
+],
+
   timezoneOffset: [
     ValidationRules.required,
-    ValidationRules.pattern(/^[+-]([0-1][0-9]|2[0-3]):[0-5][0-9]$/, 'Use format ±HH:MM')
+    ValidationRules.pattern(/^(?:\+((0[0-9]|1[0-3]):[0-5][0-9]|14:00)|-(0[0-9]|1[0-1]):[0-5][0-9]|-12:00)$/, 'Use format ±HH:MM')
   ],
   partitionChunk: [
     ValidationRules.minValue(1000),

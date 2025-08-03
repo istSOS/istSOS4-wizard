@@ -116,15 +116,16 @@ function sampleDataStep() {
                 </div>
 
                 {configuration.clearData === 1 && (
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-4">
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
                     <div className="flex items-start">
-                      <div className="ml-3">
-                        <h4 className="text-sm font-medium text-amber-900">
-                          ⚠️ Data Loss Warning
+                      <span className="text-amber-600 text-lg mr-2">*</span>
+                      <div>
+                        <h4 className="text-sm font-medium text-amber-900 mb-1">
+                          Data Loss Warning
                         </h4>
-                        <p className="text-sm text-amber-800 mt-1">
-                          This will permanently delete all existing data! Make
-                          sure you have backups before enabling this option.
+                        <p className="text-sm text-amber-800">
+                          This will <strong>permanently </strong>delete all existing data! Make
+                         sure you have backups before enabling this option.
                         </p>
                       </div>
                     </div>
@@ -249,7 +250,7 @@ function sampleDataStep() {
                       }}
                     />
                     <p className="text-xs text-gray-500 mt-1">
-                      Enter timezone offset (e.g., +00:00, +05:30, -08:00)
+                      Enter timezone offset (-12:00 to +14:00)
                     </p>
                   </FormField>
 
