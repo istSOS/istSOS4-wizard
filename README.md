@@ -8,7 +8,6 @@
   [![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
   [![Electron](https://img.shields.io/badge/Electron-Desktop-purple.svg)](https://electronjs.org/)
   
-  [Get Started](#installation) · [Desktop App](#desktop-version) · [Documentation](#configuration-workflow) · [Support](#support)
 </div>
 
 ---
