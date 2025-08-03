@@ -18,14 +18,25 @@ function AuthorizationStep() {
     dispatch({ type: "SET_FIELD_TOUCHED", payload: field });
   };
 
-  // Function to generate a new secret key
-  const generateSecretKey = () => {
-    const chars = "0123456789abcdef";
-    let result = "";
-    for (let i = 0; i < 64; i++) {
-      result += chars[Math.floor(Math.random() * chars.length)];
+  // Function to generate a new secret key using Web Crypto API
+  const generateSecretKey = async () => {
+    try {
+      const array = new Uint8Array(32);
+      window.crypto.getRandomValues(array);
+
+      const hexString = Array.from(array, (byte) =>
+        byte.toString(16).padStart(2, "0")
+      ).join("");
+
+      updateConfig("secretKey", hexString);
+    } catch (error) {
+      const chars = "0123456789abcdef";
+      let result = "";
+      for (let i = 0; i < 64; i++) {
+        result += chars[Math.floor(Math.random() * chars.length)];
+      }
+      updateConfig("secretKey", result);
     }
-    updateConfig("secretKey", result);
   };
 
   // Password strength indicator
@@ -103,6 +114,9 @@ function AuthorizationStep() {
                 onBlur={() => handleBlur("istsosAdmin")}
                 placeholder="admin"
               />
+              <p className="text-xs text-gray-500 mt-1">
+                Username for the istSOS4 administrator account
+              </p>
             </FormField>
 
             {/* Admin Password */}
@@ -209,6 +223,9 @@ function AuthorizationStep() {
                 onBlur={() => handleBlur("accessTokenExpireMinutes")}
                 placeholder="5"
               />
+              <p className="text-xs text-gray-500 mt-1">
+                Duration in minutes before access tokens expire (1-1440)
+              </p>
             </FormField>
 
             {/* Algorithm */}
@@ -223,6 +240,9 @@ function AuthorizationStep() {
                 <option value="ES256">ES256</option>
                 <option value="RS256">RS256</option>
               </select>
+              <p className="text-xs text-gray-500 mt-1">
+                Cryptographic algorithms for signing tokens
+              </p>
             </FormField>
           </div>
         </div>
@@ -278,8 +298,8 @@ function AuthorizationStep() {
               changed once the setup is complete.
             </p>
             <p className="text-sm text-amber-800">
-              <strong>Password</strong> fields are not saved for security. When you reopen the
-              wizard, you will need to enter passwords again.
+              <strong>Password</strong> fields are not saved for security. When
+              you reopen the wizard, you will need to enter passwords again.
             </p>
           </div>
         </div>

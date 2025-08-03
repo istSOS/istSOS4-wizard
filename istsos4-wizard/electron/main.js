@@ -1,6 +1,5 @@
 const { app, BrowserWindow, Menu, shell, ipcMain, dialog, Notification } = require('electron');
 const path = require('path');
-const fs = require('fs');
 const isDev = !app.isPackaged;
 
 let mainWindow;

@@ -55,6 +55,52 @@ function DatabaseStep() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
+            label="Database Host"
+            error={validation.errors.postgresHost}
+            fieldName="postgresHost"
+            required
+          >
+            <input
+              type="text"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              value={configuration.postgresHost}
+              onChange={(e) => updateConfig("postgresHost", e.target.value)}
+              onBlur={() => handleBlur("postgresHost")}
+              placeholder="database"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Hostname of the PostgreSQL database server
+            </p>
+          </FormField>
+
+          <FormField
+            label="External Port"
+            error={validation.errors.postgresExternalPort}
+            fieldName="postgresExternalPort"
+            required
+          >
+            <input
+              type="number"
+              min="1024"
+              max="65535"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              value={configuration.postgresExternalPort }
+              onChange={(e) => {
+                const value = e.target.value;
+                updateConfig(
+                  "postgresExternalPort",
+                  value === "" ? "" : parseInt(value)
+                );
+              }}
+              onBlur={() => handleBlur("postgresExternalPort")}
+              placeholder="45432"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              External port for PostgreSQL database (1024-65535)
+            </p>
+          </FormField>
+
+          <FormField
             label="Database Name"
             error={validation.errors.postgresDb}
             fieldName="postgresDb"
@@ -63,11 +109,14 @@ function DatabaseStep() {
             <input
               type="text"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
-              value={configuration.postgresDb}
+              value={configuration.postgresDb || "istsos"}
               onChange={(e) => updateConfig("postgresDb", e.target.value)}
               onBlur={() => handleBlur("postgresDb")}
               placeholder="istsos"
             />
+            <p className="text-xs text-gray-500 mt-1">
+              Name of the PostgreSQL database for istSOS4
+            </p>
           </FormField>
 
           <FormField
@@ -78,12 +127,15 @@ function DatabaseStep() {
           >
             <input
               type="text"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={configuration.postgresUser}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              value={configuration.postgresUser || "postgres"}
               onChange={(e) => updateConfig("postgresUser", e.target.value)}
               onBlur={() => handleBlur("postgresUser")}
               placeholder="postgres"
             />
+            <p className="text-xs text-gray-500 mt-1">
+              PostgreSQL database user with appropriate permissions
+            </p>
           </FormField>
 
           <FormField
@@ -96,8 +148,8 @@ function DatabaseStep() {
               <div className="relative">
                 <input
                   type="password"
-                  className="w-full px-3 py-2 pr-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  value={configuration.postgresPassword}
+                  className="w-full px-3 py-2 pr-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  value={configuration.postgresPassword || ""}
                   onChange={(e) =>
                     updateConfig("postgresPassword", e.target.value)
                   }
@@ -273,8 +325,8 @@ function DatabaseStep() {
               Security Notice
             </h4>
             <p className="text-sm text-amber-800">
-              <strong>Password</strong> fields are not saved for security. When you reopen the
-              wizard, you will need to enter passwords again.
+              <strong>Password</strong> fields are not saved for security. When
+              you reopen the wizard, you will need to enter passwords again.
             </p>
           </div>
         </div>

@@ -17,6 +17,15 @@ export const fieldValidations = {
   ],
 
   // Database Configuration
+  postgresHost: [
+    ValidationRules.required,
+    ValidationRules.hostname
+  ],
+  postgresExternalPort: [
+    ValidationRules.required,
+    ValidationRules.minValue(1024),
+    ValidationRules.maxValue(65535)
+  ],
   postgresDb: [
     ValidationRules.required,
     ValidationRules.dbName
@@ -140,7 +149,7 @@ export const validateStep = (stepNumber, configuration) => {
       break;
 
     case 3: // Database Configuration
-      fieldsToValidate = ['postgresDb', 'postgresUser', 'postgresPassword'];
+      fieldsToValidate = ['postgresHost', 'postgresExternalPort', 'postgresDb', 'postgresUser', 'postgresPassword'];
       // Include advanced fields if shown
       if (configuration.showAdvanced) {
         fieldsToValidate.push('pgPoolSize', 'pgMaxOverflow', 'pgPoolTimeout');
@@ -190,15 +199,15 @@ export const validateConfiguration = (configuration) => {
 };
 
 const stepFieldMappings = {
-  1: [], 
-  2: ['hostname', 'externalPort', 'subpath'], 
-  3: ['postgresDb', 'postgresUser', 'postgresPassword', 'pgPoolSize', 'pgMaxOverflow', 'pgPoolTimeout'], 
-  4: ['istsosAdmin', 'istsosAdminPassword', 'secretKey', 'algorithm', 'accessTokenExpireMinutes'], 
-  5: [], 
+  1: [],
+  2: ['hostname', 'externalPort', 'subpath'],
+  3: ['postgresHost', 'postgresExternalPort', 'postgresDb', 'postgresUser', 'postgresPassword', 'pgPoolSize', 'pgMaxOverflow', 'pgPoolTimeout'],
+  4: ['istsosAdmin', 'istsosAdminPassword', 'secretKey', 'algorithm', 'accessTokenExpireMinutes'],
+  5: [],
   6: ['baseDatetime', 'milliseconds', 'timezoneOffset', 'nThings', 'nObservedProperties', 'interval', 'frequency', 'partitionChunk', 'chunkInterval'], // Sample Data
   7: ['countEstimateThreshold', 'topValue'],
-  8: ['epsg'], 
-  9: [] 
+  8: ['epsg'],
+  9: []
 };
 
 export const validateStepConfiguration = (configuration, currentStep) => {

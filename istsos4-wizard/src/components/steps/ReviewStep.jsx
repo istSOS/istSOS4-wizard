@@ -25,7 +25,7 @@ function ReviewStep() {
 # Generated on: ${new Date().toISOString()}
 
 # Basic Server Configuration
-HOSTNAME=${configuration.hostname}
+HOSTNAME=${configuration.hostname}:${configuration.externalPort}
 EXTERNAL_PORT=${configuration.externalPort}
 SUBPATH=${configuration.subpath}
 VERSION=${configuration.version}
@@ -34,6 +34,8 @@ DEBUG=${configuration.debug}
 # Database Configuration
 POSTGRES_DB=${configuration.postgresDb}
 POSTGRES_USER=${configuration.postgresUser}
+POSTGRES_HOST=${configuration.postgresHost}
+POSTGRES_EXTERNAL_PORT=${configuration.postgresExternalPort}
 POSTGRES_PASSWORD=${configuration.postgresPassword}
 PG_MAX_OVERFLOW=${configuration.pgMaxOverflow}
 PG_POOL_SIZE=${configuration.pgPoolSize}
@@ -136,7 +138,7 @@ ${
         -c log_destination="stderr"
         -c log_duration="on"
     ports:
-      - "45432:5432"
+      - "\${POSTGRES_EXTERNAL_PORT}:5432"
     healthcheck:
       test: pg_isready -U \${POSTGRES_USER} -d \${POSTGRES_DB}
       interval: 10s
@@ -146,7 +148,7 @@ ${
   api:
     image: ghcr.io/istsos/istsos4/api:1.9
     environment:
-      HOSTNAME: \${HOSTNAME}:\${EXTERNAL_PORT}
+      HOSTNAME: \${HOSTNAME}
       SUBPATH: \${SUBPATH}
       VERSION: \${VERSION}
       DEBUG: \${DEBUG}
@@ -171,7 +173,7 @@ ${
       ANONYMOUS_VIEWER: \${ANONYMOUS_VIEWER}
     command: uvicorn --timeout-keep-alive 75 --workers 2 --host 0.0.0.0 --port 5000 app.main:app
     ports:
-      - 8018:5000
+      - \${EXTERNAL_PORT}:5000
     working_dir: /code
 
   redis:
@@ -183,7 +185,7 @@ ${
     command: python3 generator.py
     working_dir: /dummy_data
     environment:
-      HOSTNAME: \${HOSTNAME}:\${EXTERNAL_PORT}
+      HOSTNAME: \${HOSTNAME}
       SUBPATH: \${SUBPATH}
       VERSION: \${VERSION}
       VERSIONING: \${VERSIONING}

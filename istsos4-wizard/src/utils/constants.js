@@ -21,6 +21,8 @@ export const initialState = {
     postgresDb: 'istsos',
     postgresUser: 'postgres',
     postgresPassword: '',
+    postgresHost: 'database',
+    postgresExternalPort: 45432,
     pgMaxOverflow: 0,
     pgPoolSize: 10,
     pgPoolTimeout: 30,

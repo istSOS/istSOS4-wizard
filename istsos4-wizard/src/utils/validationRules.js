@@ -6,7 +6,7 @@ export const ValidationRules = {
     }
     return null;
   },
-  
+
   url: (value) => {
     if (!value) return null;
     try {
@@ -16,35 +16,35 @@ export const ValidationRules = {
       return 'Please enter a valid URL';
     }
   },
-  
+
   minLength: (min) => (value) => {
     if (!value || value.length < min) {
       return `Must be at least ${min} characters`;
     }
     return null;
   },
-  
+
   maxLength: (max) => (value) => {
     if (value && value.length > max) {
       return `Must be at most ${max} characters`;
     }
     return null;
   },
-  
+
   minValue: (min) => (value) => {
     if (value < min) {
       return `Must be at least ${min}`;
     }
     return null;
   },
-  
+
   maxValue: (max) => (value) => {
     if (value > max) {
       return `Must be at most ${max}`;
     }
     return null;
   },
-  
+
   pattern: (regex, message) => (value) => {
     if (!value) return null;
     if (!regex.test(value)) {
@@ -52,7 +52,7 @@ export const ValidationRules = {
     }
     return null;
   },
-  
+
   alphanumeric: (value) => {
     if (!value) return null;
     if (!/^[a-zA-Z0-9_-]+$/.test(value)) {
@@ -60,7 +60,7 @@ export const ValidationRules = {
     }
     return null;
   },
-  
+
   noSpaces: (value) => {
     if (!value) return null;
     if (/\s/.test(value)) {
@@ -68,7 +68,7 @@ export const ValidationRules = {
     }
     return null;
   },
-  
+
   dbName: (value) => {
     if (!value) return null;
     if (!/^[a-zA-Z][a-zA-Z0-9_]*$/.test(value)) {
@@ -79,7 +79,7 @@ export const ValidationRules = {
     }
     return null;
   },
-  
+
   password: (value) => {
     if (!value) return null;
     const errors = [];
@@ -87,10 +87,26 @@ export const ValidationRules = {
     if (!/[a-z]/.test(value)) errors.push('a lowercase letter');
     if (!/[A-Z]/.test(value)) errors.push('an uppercase letter');
     if (!/\d/.test(value)) errors.push('a number');
-    
+
     if (errors.length > 0) {
       return `Password must contain ${errors.join(', ')}`;
     }
     return null;
-  }
+  },
+  hostname: (value) => {
+    if (!value) return null;
+
+    const pattern = /^(?:(?:[a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+|localhost|\d{1,3}(?:\.\d{1,3}){3})$/;
+
+    if (!pattern.test(value)) {
+      return 'Enter a valid hostname, domain, or IP address (e.g., database)';
+    }
+
+    if (value.length > 253) {
+      return 'Hostname must be 253 characters or less';
+    }
+
+    return null;
+  },
+
 };
