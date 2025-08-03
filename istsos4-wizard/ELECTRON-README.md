@@ -2,7 +2,7 @@
 
 A desktop application for configuring istSOS4 server instances, built with Electron and React.
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Development Mode
 
@@ -22,7 +22,7 @@ npm run dist:mac    # macOS DMG
 npm run dist:linux  # Linux AppImage
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 istsos4-wizard/
@@ -36,7 +36,7 @@ istsos4-wizard/
 ├── package.json         # Dependencies and scripts
 ```
 
-## 🛠 Available Scripts
+##  Available Scripts
 
 - `npm run dev` - Start Vite dev server
 - `npm run build` - Build React app for production
@@ -47,7 +47,7 @@ istsos4-wizard/
 - `npm run dist:mac` - Build macOS DMG package
 - `npm run dist:linux` - Build Linux AppImage package
 
-## 📦 Distribution
+##  Distribution
 
 The build process creates platform-specific installers:
 
@@ -68,7 +68,7 @@ The build process creates platform-specific installers:
 
 **Note**: Cross-platform building requires the target platform for code signing and notarization.
 
-## 🎯 Features
+##  Features
 
 ### Desktop Integration
 
@@ -91,7 +91,7 @@ The build process creates platform-specific installers:
 - **macOS**: macOS 10.15+ (Intel & Apple Silicon)
 - **Linux**: Ubuntu 18.04+, Fedora 28+, Debian 10+ (x64)
 
-## 🔧 Development
+##  Development
 
 ### Prerequisites
 
@@ -128,7 +128,7 @@ npm run dist:linux  # Linux (works on any OS)
 - **macOS**: Requires Xcode Command Line Tools
 - **Linux**: Requires build-essential package
 
-## 📋 Configuration Steps
+##  Configuration Steps
 
 1. **Welcome** - Introduction and overview
 2. **Basic Server** - Server details and connection
@@ -137,29 +137,9 @@ npm run dist:linux  # Linux (works on any OS)
 5. **Services** - Coordinate systems
 6. **Data Management** - Data policies
 7. **Performance** - Optimization settings
-8. **Simple Data** - Test data generation
+8. **Sample Data** - Test data generation
 9. **Review** - Configuration summary
 10. **Completion** - Final setup
 
-## 🔒 Security
 
-- Context isolation enabled
-- Node integration disabled
-- Secure preload scripts
-- External link protection
 
-## 📄 License
-
-[Add your license information here]
-
-## 🤝 Contributing
-
-[Add contribution guidelines here]
-
-## 📞 Support
-
-For issues and questions:
-
-- GitHub Issues: [repository-url]
-- Documentation: [docs-url]
-- Email: info@istsos.org
