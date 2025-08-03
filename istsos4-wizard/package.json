@@ -51,21 +51,21 @@
     "files": [
       "dist/**/*",
       "electron/**/*",
-      "public/logo.png"
+      "public/logo.jpg"
     ],
     "win": {
       "target": "nsis",
-      "icon": "public/logo.png",
+      "icon": "public/logo.jpg",
       "signAndEditExecutable": false
     },
     "mac": {
       "target": "dmg",
-      "icon": "public/logo.png",
+      "icon": "public/logo.jpg",
       "category": "public.app-category.developer-tools"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "public/logo.png",
+      "icon": "public/logo.jpg",
       "category": "Development"
     },
     "nsis": {

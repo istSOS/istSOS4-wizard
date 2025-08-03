@@ -1,4 +1,5 @@
 import React from "react";
+import LogoImage from "../../assets/logo.png";
 
 function WelcomeStep() {
   return (
@@ -7,7 +8,7 @@ function WelcomeStep() {
         {/* Logo Section */}
         <div className="flex justify-center mt-1">
           <img
-            src="/logo.png"
+            src=  {LogoImage}
             alt="istSOS4 Logo"
             className="w-52 object-contain"
           />
