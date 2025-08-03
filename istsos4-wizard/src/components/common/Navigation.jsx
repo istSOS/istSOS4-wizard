@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import { useWizard } from "../../hooks/useWizard";
 import { useWizardPersistence } from "../../hooks/useWizardPersistence";
+import { validateStepConfiguration } from "../../utils/fieldValidations";
 
 const steps = [
   { title: "Welcome" },
@@ -21,12 +22,13 @@ function Navigation() {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showResetWarning, setShowResetWarning] = useState(false);
 
-  const hasErrors = Object.keys(state.validation.errors).length > 0;
-  const hasTouchedErrors = Object.keys(state.validation.errors).some(
-    (field) => state.validation.touched[field]
+  const configurationErrors = validateStepConfiguration(
+    state.configuration || {},
+    state.currentStep
   );
+  const hasErrors = Object.keys(configurationErrors).length > 0;
 
-  const canGoNext = state.currentStep < state.totalSteps;
+  const canGoNext = state.currentStep < state.totalSteps && !hasErrors;
   const canGoPrev = state.currentStep > 1;
   const isCompletionStep = state.currentStep === state.totalSteps;
 
@@ -72,9 +74,10 @@ function Navigation() {
         <div className="text-sm text-gray-600">
           {steps[state.currentStep - 1]?.title}
         </div>
-        {hasErrors && hasTouchedErrors && (
+        {hasErrors && (
           <p className="text-xs text-red-600 mt-1">
-            Please fix errors before proceeding
+            {Object.keys(configurationErrors).length} validation issue
+            {Object.keys(configurationErrors).length > 1 ? "s" : ""} found
           </p>
         )}
       </div>
@@ -136,9 +139,9 @@ function Navigation() {
         {!isCompletionStep && (
           <button
             onClick={handleNext}
-            disabled={!canGoNext}
+            disabled={!canGoNext || hasErrors}
             className={`flex items-center px-4 py-2 rounded-md transition-colors ${
-              canGoNext
+              canGoNext && !hasErrors
                 ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg hover:shadow-xl"
                 : "bg-gray-100 text-gray-400 cursor-not-allowed"
             }`}

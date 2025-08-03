@@ -137,14 +137,15 @@ function BasicServerStep() {
           </div>
 
           {configuration.debug === 1 && (
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-4">
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
               <div className="flex items-start">
-                <div className="ml-3">
-                  <h4 className="text-sm font-medium text-amber-900">
-                    ⚠️ Development Mode Warning
+                <span className="text-amber-600 text-lg mr-2">*</span>
+                <div>
+                  <h4 className="text-sm font-medium text-amber-900 mb-1">
+                    Development Mode Warning
                   </h4>
-                  <p className="text-sm text-amber-800 mt-1">
-                    Debug mode should be disabled in production environments for
+                  <p className="text-sm text-amber-800">
+                    <strong>Debug mode</strong> should be disabled in production environments for
                     security and performance reasons.
                   </p>
                 </div>

@@ -130,7 +130,6 @@ export const validateField = (fieldName, value) => {
   return null;
 };
 
-// Validate fields for a specific step
 export const validateStep = (stepNumber, configuration) => {
   const errors = {};
   let fieldsToValidate = [];
@@ -177,7 +176,6 @@ export const validateStep = (stepNumber, configuration) => {
   return errors;
 };
 
-// Validate entire configuration
 export const validateConfiguration = (configuration) => {
   const errors = {};
 
@@ -185,6 +183,44 @@ export const validateConfiguration = (configuration) => {
     const error = validateField(field, configuration[field]);
     if (error) {
       errors[field] = error;
+    }
+  });
+
+  return errors;
+};
+
+const stepFieldMappings = {
+  1: [], 
+  2: ['hostname', 'externalPort', 'subpath'], 
+  3: ['postgresDb', 'postgresUser', 'postgresPassword', 'pgPoolSize', 'pgMaxOverflow', 'pgPoolTimeout'], 
+  4: ['istsosAdmin', 'istsosAdminPassword', 'secretKey', 'algorithm', 'accessTokenExpireMinutes'], 
+  5: [], 
+  6: ['baseDatetime', 'milliseconds', 'timezoneOffset', 'nThings', 'nObservedProperties', 'interval', 'frequency', 'partitionChunk', 'chunkInterval'], // Sample Data
+  7: ['countEstimateThreshold', 'topValue'],
+  8: ['epsg'], 
+  9: [] 
+};
+
+export const validateStepConfiguration = (configuration, currentStep) => {
+  const errors = {};
+
+  if (currentStep === 9) {
+    return validateConfiguration(configuration);
+  }
+
+  const fieldsToValidate = [];
+  for (let step = 1; step <= currentStep; step++) {
+    if (stepFieldMappings[step]) {
+      fieldsToValidate.push(...stepFieldMappings[step]);
+    }
+  }
+
+  fieldsToValidate.forEach(field => {
+    if (fieldValidations[field]) {
+      const error = validateField(field, configuration[field]);
+      if (error) {
+        errors[field] = error;
+      }
     }
   });
 
