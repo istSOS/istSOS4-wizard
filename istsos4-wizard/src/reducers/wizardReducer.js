@@ -1,25 +1,27 @@
 import { validateField, validateStep } from '../utils/fieldValidations';
+import { initialState } from '../utils/constants';
+
 
 export function wizardReducer(state, action) {
   switch (action.type) {
     case 'SET_STEP':
       return { ...state, currentStep: action.payload };
-      
+
     case 'UPDATE_CONFIG':
       const newConfig = { ...state.configuration, ...action.payload };
       const fieldName = Object.keys(action.payload)[0];
       const fieldValue = action.payload[fieldName];
-      
-        const fieldError = validateField(fieldName, fieldValue);
-      
- 
+
+      const fieldError = validateField(fieldName, fieldValue);
+
+
       const newErrors = { ...state.validation.errors };
       if (fieldError) {
         newErrors[fieldName] = fieldError;
       } else {
         delete newErrors[fieldName];
       }
-      
+
       return {
         ...state,
         configuration: newConfig,
@@ -29,7 +31,7 @@ export function wizardReducer(state, action) {
           touched: { ...state.validation.touched, [fieldName]: true }
         }
       };
-      
+
     case 'SET_FIELD_TOUCHED':
       return {
         ...state,
@@ -38,7 +40,7 @@ export function wizardReducer(state, action) {
           touched: { ...state.validation.touched, [action.payload]: true }
         }
       };
-      
+
     case 'TOUCH_MULTIPLE_FIELDS':
       const newTouched = { ...state.validation.touched };
       action.payload.forEach(field => {
@@ -51,7 +53,7 @@ export function wizardReducer(state, action) {
           touched: newTouched
         }
       };
-      
+
     case 'VALIDATE_CURRENT_STEP':
       const stepErrors = validateStep(state.currentStep, state.configuration);
       return {
@@ -62,19 +64,19 @@ export function wizardReducer(state, action) {
           isValid: Object.keys(stepErrors).length === 0
         }
       };
-      
+
     case 'NEXT_STEP':
-  
+
       const currentStepErrors = validateStep(state.currentStep, state.configuration);
-      
+
       if (Object.keys(currentStepErrors).length > 0) {
-        
+
         const errorFields = Object.keys(currentStepErrors);
         const touchedFields = { ...state.validation.touched };
         errorFields.forEach(field => {
           touchedFields[field] = true;
         });
-        
+
         return {
           ...state,
           validation: {
@@ -84,19 +86,23 @@ export function wizardReducer(state, action) {
           }
         };
       }
-      
+
       return {
         ...state,
         currentStep: Math.min(state.currentStep + 1, state.totalSteps),
         validation: { ...state.validation, isValid: true }
       };
-      
+
     case 'PREV_STEP':
       return {
         ...state,
         currentStep: Math.max(state.currentStep - 1, 1)
       };
-      
+
+    case 'RESET_WIZARD':
+      localStorage.removeItem('istsos4-wizard-state');
+      return initialState;
+
     default:
       return state;
   }
