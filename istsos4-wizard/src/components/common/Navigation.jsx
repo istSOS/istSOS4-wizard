@@ -26,7 +26,13 @@ function Navigation() {
     state.configuration || {},
     state.currentStep
   );
+
+  const touchedConfigErrors = Object.keys(configurationErrors).filter(
+    (field) => state.validation.touched[field]
+  );
+
   const hasErrors = Object.keys(configurationErrors).length > 0;
+  const hasTouchedErrors = touchedConfigErrors.length > 0;
 
   const canGoNext = state.currentStep < state.totalSteps && !hasErrors;
   const canGoPrev = state.currentStep > 1;
@@ -74,10 +80,10 @@ function Navigation() {
         <div className="text-sm text-gray-600">
           {steps[state.currentStep - 1]?.title}
         </div>
-        {hasErrors && (
+        {hasTouchedErrors && (
           <p className="text-xs text-red-600 mt-1">
-            {Object.keys(configurationErrors).length} validation issue
-            {Object.keys(configurationErrors).length > 1 ? "s" : ""} found
+            {touchedConfigErrors.length} validation issue
+            {touchedConfigErrors.length > 1 ? "s" : ""} found
           </p>
         )}
       </div>
