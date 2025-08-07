@@ -3,7 +3,7 @@ import { useWizard } from "../../hooks/useWizard";
 import FormField from "../common/FormField";
 import Toggle from "../common/Toggle";
 
-function sampleDataStep() {
+function SampleDataStep() {
   const { state, dispatch } = useWizard();
   const { configuration, validation } = state;
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -434,4 +434,4 @@ function sampleDataStep() {
   );
 }
 
-export default sampleDataStep;
+export default SampleDataStep;
