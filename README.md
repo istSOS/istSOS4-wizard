@@ -61,9 +61,9 @@ npm run dist
 
 | Platform | Installer Location | 
 |----------|-------------------| 
-|  **Windows** | `dist-electron/win-unpacked/istSOS4 Configurator Setup 1.0.0.exe` | 
+|  **Windows** | `dist-electron/win-unpacked/istSOS4 Configurator` | 
 |  **macOS** | `dist-electron/mac/istSOS4 Configurator-1.0.0.dmg` |
-|  **Linux** | `dist-electron/linux-unpacked/istSOS4 Configurator-1.0.0.AppImage` | 
+|  **Linux** | `dist-electron/linux-unpacked/istSOS4 wizard` | 
 
 ---
 
