@@ -64,8 +64,7 @@ FREQUENCY=${configuration.frequency}
 START_DATETIME=${
       configuration.baseDatetime +
       "." +
-      (configuration.milliseconds || "000").padStart(3, "0") +
-      (configuration.timezoneOffset || "+01:00")
+     "000"+ (configuration.timezoneOffset || "+01:00")
     }
 PARTITION_CHUNK=${configuration.partitionChunk}
 CHUNK_INTERVAL=${configuration.chunkInterval}

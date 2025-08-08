@@ -92,11 +92,6 @@ export const fieldValidations = {
   baseDatetime: [
     ValidationRules.required,
   ],
- milliseconds: [
-  ValidationRules.required,
-  ValidationRules.pattern(/^\d{1,3}$/, 'Only digits (0–999) are allowed')
-],
-
   timezoneOffset: [
     ValidationRules.required,
     ValidationRules.pattern(/^(?:\+((0[0-9]|1[0-3]):[0-5][0-9]|14:00)|-(0[0-9]|1[0-1]):[0-5][0-9]|-12:00)$/, 'Use format ±HH:MM')
@@ -162,7 +157,7 @@ export const validateStep = (stepNumber, configuration) => {
 
     case 6: // Sample Data Configuration
       if (configuration.dummyData === 1) {
-        fieldsToValidate = ['nThings', 'nObservedProperties', 'baseDatetime', 'milliseconds', 'timezoneOffset', 'partitionChunk'];
+        fieldsToValidate = ['nThings', 'nObservedProperties', 'baseDatetime', 'timezoneOffset', 'partitionChunk'];
       }
       break;
 
@@ -204,7 +199,7 @@ const stepFieldMappings = {
   3: ['postgresHost', 'postgresExternalPort', 'postgresDb', 'postgresUser', 'postgresPassword', 'pgPoolSize', 'pgMaxOverflow', 'pgPoolTimeout'],
   4: ['istsosAdmin', 'istsosAdminPassword', 'secretKey', 'algorithm', 'accessTokenExpireMinutes'],
   5: [],
-  6: ['baseDatetime', 'milliseconds', 'timezoneOffset', 'nThings', 'nObservedProperties', 'interval', 'frequency', 'partitionChunk', 'chunkInterval'], // Sample Data
+  6: ['baseDatetime', 'timezoneOffset', 'nThings', 'nObservedProperties', 'interval', 'frequency', 'partitionChunk', 'chunkInterval'], // Sample Data
   7: ['countEstimateThreshold', 'topValue'],
   8: ['epsg'],
   9: []

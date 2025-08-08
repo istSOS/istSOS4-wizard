@@ -6,6 +6,7 @@ function DatabaseStep() {
   const { state, dispatch } = useWizard();
   const { configuration, validation } = state;
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [showPortTooltip, setShowPortTooltip] = useState(false);
 
   const updateConfig = (field, value) => {
     dispatch({
@@ -79,22 +80,52 @@ function DatabaseStep() {
             fieldName="postgresExternalPort"
             required
           >
-            <input
-              type="number"
-              min="1024"
-              max="65535"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
-              value={configuration.postgresExternalPort }
-              onChange={(e) => {
-                const value = e.target.value;
-                updateConfig(
-                  "postgresExternalPort",
-                  value === "" ? "" : parseInt(value)
-                );
-              }}
-              onBlur={() => handleBlur("postgresExternalPort")}
-              placeholder="45432"
-            />
+            <div className="relative">
+              <input
+                type="number"
+                min="1024"
+                max="65535"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                value={configuration.postgresExternalPort}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  updateConfig(
+                    "postgresExternalPort",
+                    value === "" ? "" : parseInt(value)
+                  );
+                }}
+                onBlur={() => handleBlur("postgresExternalPort")}
+                onMouseEnter={() => setShowPortTooltip(true)}
+                onMouseLeave={() => setShowPortTooltip(false)}
+                placeholder="45432"
+              />
+
+              {/* Port check tooltip */}
+              {showPortTooltip && configuration.postgresExternalPort && (
+                <div className="absolute z-50 w-80 p-3 text-xs text-blue-900 bg-blue-100 border border-blue-200 rounded-md shadow-xl bottom-full left-0 mb-2">
+                  <div className="mb-2">
+                    <strong>
+                      Check if port {configuration.postgresExternalPort} is
+                      available:
+                    </strong>
+                  </div>
+                  <div className="font-mono space-y-1 bg-blue-50 border border-blue-200 p-2 rounded">
+                    <div>
+                      <strong>Windows:</strong> netstat -an | findstr ":
+                      {configuration.postgresExternalPort}"
+                    </div>
+                    <div>
+                      <strong>Linux/Mac:</strong> netstat -an | grep :
+                      {configuration.postgresExternalPort}
+                    </div>
+                  </div>
+                  <div className="mt-2 text-blue-700">
+                    No output = port available
+                  </div>
+                  <div className="absolute w-3 h-3 bg-blue-100 border-r border-b border-blue-200 rotate-45 top-full left-4 -mt-1"></div>
+                </div>
+              )}
+            </div>
             <p className="text-xs text-gray-500 mt-1">
               External port for PostgreSQL database (1024-65535)
             </p>

@@ -82,8 +82,8 @@ function Navigation() {
         </div>
         {hasTouchedErrors && (
           <p className="text-xs text-red-600 mt-1">
-            {touchedConfigErrors.length} validation issue
-            {touchedConfigErrors.length > 1 ? "s" : ""} found
+            Please resolve {touchedConfigErrors.length} configuration error
+            {touchedConfigErrors.length > 1 ? "s" : ""} 
           </p>
         )}
       </div>

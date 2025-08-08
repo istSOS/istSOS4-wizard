@@ -19,7 +19,7 @@ const ConfigurationSummary = () => {
             <div className="flex justify-between">
               <dt className="text-blue-700">URL:</dt>
               <dd className="font-medium text-blue-900">
-                             {`${configuration.hostname}:${configuration.externalPort}${configuration.subpath}`}
+                {`${configuration.hostname}:${configuration.externalPort}${configuration.subpath}`}
               </dd>
             </div>
             <div className="flex justify-between">
@@ -55,9 +55,9 @@ const ConfigurationSummary = () => {
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-green-700">Pool Size:</dt>
+              <dt className="text-green-700"> External Port:</dt>
               <dd className="font-medium text-green-900">
-                {configuration.pgPoolSize}
+                {configuration.postgresExternalPort}
               </dd>
             </div>
           </dl>
@@ -105,7 +105,7 @@ const ConfigurationSummary = () => {
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-amber-700">Simple Data:</dt>
+              <dt className="text-amber-700">Sample Data:</dt>
               <dd className="font-medium text-amber-900">
                 {configuration.dummyData ? "Enabled" : "Disabled"}
               </dd>

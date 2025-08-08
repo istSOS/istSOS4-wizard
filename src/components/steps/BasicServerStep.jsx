@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useWizard } from "../../hooks/useWizard";
 import FormField from "../common/FormField";
 import Toggle from "../common/Toggle";
@@ -6,6 +6,7 @@ import Toggle from "../common/Toggle";
 function BasicServerStep() {
   const { state, dispatch } = useWizard();
   const { configuration, validation } = state;
+  const [showPortTooltip, setShowPortTooltip] = useState(false);
 
   const updateConfig = (field, value) => {
     dispatch({
@@ -61,14 +62,43 @@ function BasicServerStep() {
             fieldName="externalPort"
             required
           >
-            <input
-              type="number"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={configuration.externalPort}
-              onChange={(e) => updateConfig("externalPort", e.target.value)}
-              onBlur={() => handleBlur("externalPort")}
-              placeholder="8018"
-            />
+            <div className="relative">
+              <input
+                type="number"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                value={configuration.externalPort}
+                onChange={(e) => updateConfig("externalPort", e.target.value)}
+                onBlur={() => handleBlur("externalPort")}
+                onMouseEnter={() => setShowPortTooltip(true)}
+                onMouseLeave={() => setShowPortTooltip(false)}
+                placeholder="8018"
+              />
+
+      {showPortTooltip && configuration.externalPort && (
+                <div className="absolute z-50 w-80 p-3 text-xs text-blue-900 bg-blue-100 border border-blue-200 rounded-md shadow-xl bottom-full left-0 mb-2">
+                  <div className="mb-2">
+                    <strong>
+                      Check if port {configuration.externalPort} is
+                      available:
+                    </strong>
+                  </div>
+                  <div className="font-mono space-y-1 bg-blue-50 border border-blue-200 p-2 rounded">
+                    <div>
+                      <strong>Windows:</strong> netstat -an | findstr ":
+                      {configuration.externalPort}"
+                    </div>
+                    <div>
+                      <strong>Linux/Mac:</strong> netstat -an | grep :
+                      {configuration.externalPort}
+                    </div>
+                  </div>
+                  <div className="mt-2 text-blue-700">
+                    No output = port available
+                  </div>
+                  <div className="absolute w-3 h-3 bg-blue-100 border-r border-b border-blue-200 rotate-45 top-full left-4 -mt-1"></div>
+                </div>
+              )}
+            </div>
             <p className="text-xs text-gray-500 mt-1">
               Port number on which the server will be accessible (1024-49151)
             </p>
@@ -145,8 +175,8 @@ function BasicServerStep() {
                     Development Mode Warning
                   </h4>
                   <p className="text-sm text-amber-800">
-                    <strong>Debug mode</strong> should be disabled in production environments for
-                    security and performance reasons.
+                    <strong>Debug mode</strong> should be disabled in production
+                    environments for security and performance reasons.
                   </p>
                 </div>
               </div>

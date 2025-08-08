@@ -48,7 +48,6 @@ export const initialState = {
     interval: 'P1Y',
     frequency: 'PT5M',
     baseDatetime: new Date().toISOString().slice(0, 19),
-    milliseconds: '000',
     timezoneOffset: '+01:00',
 
     // Performance Settings
