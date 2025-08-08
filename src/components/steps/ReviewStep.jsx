@@ -205,7 +205,7 @@ ${
       AUTHORIZATION: \${AUTHORIZATION}
 `;
   };
- 
+
   const copyDockerComposeToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(generateDockerComposeFile());
@@ -238,7 +238,6 @@ ${
     }
   };
 
-  
   return (
     <div className="space-y-8">
       <div>

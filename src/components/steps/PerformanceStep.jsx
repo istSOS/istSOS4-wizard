@@ -185,7 +185,7 @@ function PerformanceStep() {
                 description:
                   "Fully count all entities. Always gives accurate results but can be very slow on large result sets.",
               
-                bestFor: "Small to medium datasets (< 10K records)",
+                bestFor: "Small to medium datasets",
                 color: "green",
               },
               {
@@ -194,7 +194,7 @@ function PerformanceStep() {
                 shortTitle: "Balanced Approach",
                 description:
                   "Count up to the threshold, then estimate using database statistics. Guarantees accuracy for small results but may be inaccurate for large unindexed datasets.",
-                bestFor: "Medium datasets (10K - 50K records)",
+                bestFor: "Medium datasets",
                 color: "blue",
               },
               {
@@ -203,7 +203,7 @@ function PerformanceStep() {
                 shortTitle: "Maximum Performance",
                 description:
                   "Estimate first using database statistics, then count if below threshold. Fastest method but may give incorrect estimates for low counts if database statistics are inaccurate.",
-                bestFor: "Large datasets (> 50K records)",
+                bestFor: "Large datasets",
                 color: "purple",
               },
             ].map((mode) => {
@@ -261,9 +261,8 @@ function PerformanceStep() {
 
                       <div className="text-sm">
                         <span className="font-medium text-gray-900">
-                          Best for:
+                          Best for: <span className="text-gray-500">{mode.bestFor}</span>
                         </span>
-                        <p className="text-gray-600 mt-1">{mode.bestFor}</p>
                       </div>
                     </div>
                   </div>

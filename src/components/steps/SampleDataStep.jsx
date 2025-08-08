@@ -124,8 +124,9 @@ function SampleDataStep() {
                           Data Loss Warning
                         </h4>
                         <p className="text-sm text-amber-800">
-                          This will <strong>permanently </strong>delete all existing data! Make
-                         sure you have backups before enabling this option.
+                          This will <strong>permanently </strong>delete all
+                          existing data! Make sure you have backups before
+                          enabling this option.
                         </p>
                       </div>
                     </div>
@@ -166,6 +167,9 @@ function SampleDataStep() {
                   }}
                   onBlur={() => handleBlur("nThings")}
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  Total number of sensor devices to generate (1 - 100)
+                </p>
               </FormField>
 
               <FormField
@@ -188,6 +192,9 @@ function SampleDataStep() {
                   }}
                   onBlur={() => handleBlur("nObservedProperties")}
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  Number of measurements each sensor will record (1 - 10)
+                </p>
               </FormField>
 
               <FormField
@@ -206,30 +213,9 @@ function SampleDataStep() {
                     onBlur={() => handleBlur("baseDatetime")}
                     step="1"
                   />
-
-                  {/* Milliseconds Input */}
-                  <FormField
-                    label="Milliseconds"
-                    error={validation.errors.milliseconds}
-                    fieldName="milliseconds"
-                  >
-                    <input
-                      type="text"
-                      placeholder="000"
-                      maxLength="3"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      value={configuration.milliseconds || ""}
-                      onChange={(e) => {
-                        updateConfig("milliseconds", e.target.value);
-                      }}
-                      onBlur={() => {
-                        handleBlur("milliseconds");
-                      }}
-                    />
-                    <p className="text-xs text-gray-500 mt-1">
-                      Enter milliseconds (000-999)
-                    </p>
-                  </FormField>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Starting timestamp for generated sensor data
+                  </p>
 
                   <FormField
                     label="Timezone Offset"
@@ -261,10 +247,7 @@ function SampleDataStep() {
                       {configuration.baseDatetime
                         ? configuration.baseDatetime +
                           "." +
-                          (configuration.milliseconds || "000").padStart(
-                            3,
-                            "0"
-                          ) +
+                          "000" +
                           (configuration.timezoneOffset || "+01:00")
                         : "Select date and time above"}
                     </p>
@@ -272,7 +255,7 @@ function SampleDataStep() {
                 </div>
               </FormField>
 
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <FormField label="Data Generation Period">
                   <select
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -284,6 +267,9 @@ function SampleDataStep() {
                     <option value="P1M">1 Month</option>
                     <option value="P1Y">1 Year</option>
                   </select>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Total time span for which data will be generated
+                  </p>
                 </FormField>
 
                 <FormField label="Sampling Frequency" fieldName="frequency">
@@ -297,6 +283,9 @@ function SampleDataStep() {
                     <option value="PT15M">Every 15 minutes</option>
                     <option value="PT1H">Every hour</option>
                   </select>
+                  <p className="text-xs text-gray-500 mt-1">
+                    How often each sensor records measurements
+                  </p>
                 </FormField>
               </div>
             </div>
@@ -417,11 +406,11 @@ function SampleDataStep() {
                 <div className="text-2xl font-bold text-blue-900">
                   {calculateDataPoints().toLocaleString()}
                 </div>
-                <div className="text-sm">Estimated Data Points</div>
+                <div className="text-sm">Dataset Observation Points</div>
                 {calculateDataPoints() > 1000000 && (
                   <div className="mt-2">
                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                      Large Dataset
+                      *Larger Dataset
                     </span>
                   </div>
                 )}
