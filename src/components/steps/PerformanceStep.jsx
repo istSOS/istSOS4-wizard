@@ -26,7 +26,7 @@ function PerformanceStep() {
       <p className="text-gray-600">
         Configure performance optimization and advanced database settings
       </p>
-      <div className="bg-gray-50 p-4 rounded-lg">
+      <div className="bg-gray-50 p-4 rounded-xl">
         <div className="flex items-start">
           <div className="flex-1">
             <Toggle
@@ -47,11 +47,7 @@ function PerformanceStep() {
                     Docker Compose configuration
                   </p>
                 </div>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Default connection: redis://redis:6379</li>
-                  <li>• Recommended memory: 512MB minimum</li>
-                  <li>• Cache TTL: 1 hour (configurable)</li>
-                </ul>
+      
               </div>
             )}
           </div>

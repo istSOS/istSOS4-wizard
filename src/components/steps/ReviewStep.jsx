@@ -64,7 +64,8 @@ FREQUENCY=${configuration.frequency}
 START_DATETIME=${
       configuration.baseDatetime +
       "." +
-     "000"+ (configuration.timezoneOffset || "+01:00")
+      "000" +
+      (configuration.timezoneOffset || "+01:00")
     }
 PARTITION_CHUNK=${configuration.partitionChunk}
 CHUNK_INTERVAL=${configuration.chunkInterval}
@@ -77,13 +78,8 @@ TOP_VALUE=${configuration.topValue}
 
 # Coordinate System
 EPSG=${configuration.epsg}
-
-# Docker Network Configuration (if using Redis)
-${
-  configuration.redis === 1
-    ? "REDIS_HOST=redis\nREDIS_PORT=6379"
-    : "# Redis disabled"
-}`;
+    
+`;
 
     return env;
   };
@@ -342,6 +338,24 @@ ${
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Download Configuration Files
         </h3>
+
+        {/* Important Note */}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+          <div className="flex items-start">
+            <span className="text-amber-600 text-lg mr-2">*</span>
+            <div>
+              <h4 className="text-sm font-medium text-amber-900 mb-1">
+                Important Note
+              </h4>
+              <p className="text-sm text-amber-800">
+                The downloaded file will be named <strong>istsos4.env</strong>.
+                Please rename it to <strong>.env</strong> after downloading, or
+                copy the content and paste it into your existing <strong>.env</strong> file.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="flex flex-col sm:flex-row gap-4">
           <button
             onClick={downloadEnvFile}
@@ -353,7 +367,7 @@ ${
             }`}
           >
             <Download className="w-5 h-5 mr-2" />
-            Download .env File
+            Download .env file
           </button>
 
           <button
@@ -366,7 +380,7 @@ ${
             }`}
           >
             <Download className="w-5 h-5 mr-2" />
-            Download Docker Compose File
+            Download docker-compose.yml file
           </button>
         </div>
       </div>
@@ -405,7 +419,7 @@ ${
             <code className="bg-blue-100 px-2 py-1 rounded font-mono text-blue-900">
               docker-compose.yml
             </code>{" "}
-            files with the newly generated files in your project. directory
+            files with the newly generated files in your project directory.
           </li>
           <li>
             Ensure Docker and Docker Compose are installed on your system.
