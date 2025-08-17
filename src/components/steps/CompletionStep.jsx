@@ -89,15 +89,19 @@ function CompletionStep() {
           </p>
           <p className="text-sm text-purple-800 italic mb-2">
             <span className="font-semibold">Rahull004</span>. "istSOS4
-            Configuration Wizard" GitHub repository, 2025. Available:
-            <a
-              href="https://github.com/Rahull004/istSOS4-wizard"
-              className="text-purple-600 hover:text-purple-800 underline ml-1"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://github.com/Rahull004/istSOS4-wizard
-            </a>
+            Configuration Wizard" GitHub repository, 2025.
+            <p>
+              {" "}
+              Available:
+              <a
+                href="https://github.com/Rahull004/istSOS4-wizard"
+                className="text-purple-600 hover:text-purple-800 underline ml-1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                https://github.com/Rahull004/istSOS4-wizard
+              </a>
+            </p>
           </p>
           <p className="text-xs text-purple-700">
             Developed through{" "}
