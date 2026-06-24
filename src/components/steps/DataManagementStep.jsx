@@ -316,6 +316,76 @@ function DataManagementStep() {
         </div>
       </div>
 
+      {/* Network Card */}
+      <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Network
+            </h3>
+            <p className="text-gray-600 text-sm">
+              Enable network mode to group datastreams by network, allowing for better organization and management of related data.
+            </p>
+          </div>
+          <div className="ml-6">
+            <Toggle
+              checked={configuration.network === 1}
+              onChange={(e) =>
+                updateConfig("network", e.target.checked ? 1 : 0)
+              }
+              label=""
+            />
+          </div>
+        </div>
+      </div>
+
+     {/* Aggregation Card */}
+      <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          Specifies the function for updating the observedArea of datastreams
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[
+            {
+              code: "CONVEX_HULL",
+              description: "A convex hull is used to determine an affected area based on a aggregate set of geometries based on their sets of point observations.",
+              color: "blue",
+            },
+            {
+              code: "EXTENT",
+              description: "a two-dimensional bounding box enclosing a geometry or collection of geometries is used instead.",
+              color: "green",
+            },
+          ].map((st_aggregate) => (
+            <div
+              key={st_aggregate.code}
+              className={`border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 ${
+                configuration.stAggregate === st_aggregate.code
+                  ? `border-${st_aggregate.color}-500 bg-${st_aggregate.color}-50`
+                  : "border-gray-200 hover:border-gray-300"
+              }`}
+              onClick={() => updateConfig("stAggregate", st_aggregate.code)}
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-semibold text-gray-900">
+                  {st_aggregate.code}
+                </span>
+                <span
+                  className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                    st_aggregate.color === "blue"
+                      ? "bg-blue-100 text-blue-800"
+                      : "bg-green-100 text-green-800"
+                  }`}
+                >
+                  {st_aggregate.name}
+                </span>
+              </div>
+              <p className="text-sm text-gray-600">{st_aggregate.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Warning Banner */}
        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
         <div className="flex items-start">

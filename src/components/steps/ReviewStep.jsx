@@ -53,6 +53,8 @@ ANONYMOUS_VIEWER=${configuration.anonymousViewer}
 # Data Management
 VERSIONING=${configuration.versioning}
 DUPLICATES=${configuration.duplicates}
+NETWORK=${configuration.network}
+ST_AGGREGATE=${configuration.stAggregate}
 
 # Simple Data Configuration
 DUMMY_DATA=${configuration.dummyData}
@@ -119,7 +121,7 @@ ${
   const generateDockerComposeFile = () => {
     return `services:
   database:
-    image: ghcr.io/istsos/istsos4/database:1.4
+    image: ghcr.io/istsos/istsos4/database:1.10
     environment:
       POSTGRES_DB: \${POSTGRES_DB}
       POSTGRES_USER: \${POSTGRES_USER}
@@ -145,7 +147,7 @@ ${
       retries: 5
 
   api:
-    image: ghcr.io/istsos/istsos4/api:1.9
+    image: ghcr.io/istsos/istsos4/api:1.19
     environment:
       HOSTNAME: \${HOSTNAME}
       SUBPATH: \${SUBPATH}
@@ -170,6 +172,8 @@ ${
       ACCESS_TOKEN_EXPIRE_MINUTES: \${ACCESS_TOKEN_EXPIRE_MINUTES}
       ALGORITHM: \${ALGORITHM}
       ANONYMOUS_VIEWER: \${ANONYMOUS_VIEWER}
+      NETWORK: \${NETWORK}
+      ST_AGGREGATE: \${ST_AGGREGATE}
     command: uvicorn --timeout-keep-alive 75 --workers 2 --host 0.0.0.0 --port 5000 app.main:app
     ports:
       - \${EXTERNAL_PORT}:5000
@@ -202,6 +206,8 @@ ${
       CHUNK_INTERVAL: \${CHUNK_INTERVAL}
       EPSG: \${EPSG}
       AUTHORIZATION: \${AUTHORIZATION}
+      NETWORK: \${NETWORK}
+      ST_AGGREGATE: \${ST_AGGREGATE}
 `;
   };
 
