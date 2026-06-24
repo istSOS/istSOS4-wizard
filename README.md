@@ -49,6 +49,15 @@ npm run dev
 
 ### Development Mode
 ```bash
+# Go to Electron's distribution folder
+cd istSOS4-wizard/node_modules/electron/dist
+
+# Fix permissions for the Chrome sandbox
+sudo chown root:root chrome-sandbox
+sudo chmod 4755 chrome-sandbox
+
+# Return to project root and run in development mode
+cd istSOS4-wizard
 npm run electron-dev
 ```
 
@@ -63,7 +72,7 @@ npm run dist
 |----------|-------------------| 
 |  **Windows** | `dist-electron/win-unpacked/istSOS4 Configurator` | 
 |  **macOS** | `dist-electron/mac/istSOS4 Configurator-1.0.0.dmg` |
-|  **Linux** | `dist-electron/linux-unpacked/istSOS4 wizard` | 
+|  **Linux** | `dist-electron/linux-unpacked/istSOS4-wizard` | 
 
 ---
 
