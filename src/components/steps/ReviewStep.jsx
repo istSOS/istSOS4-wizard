@@ -122,6 +122,8 @@ ${
     return `services:
   database:
     image: ghcr.io/istsos/istsos4/database:1.10
+    restart: always
+    container_name: istsos4-wizard-database
     environment:
       POSTGRES_DB: \${POSTGRES_DB}
       POSTGRES_USER: \${POSTGRES_USER}
@@ -129,6 +131,7 @@ ${
       DATADIR: /var/lib/postgresql/data
     command: >
       postgres
+        -c custom.network=\${NETWORK:-0}
         -c custom.versioning=\${VERSIONING:-0}
         -c custom.authorization=\${AUTHORIZATION:-0}
         -c custom.duplicates=\${DUPLICATES:-0}
@@ -140,14 +143,23 @@ ${
         -c log_duration="on"
     ports:
       - "\${POSTGRES_EXTERNAL_PORT}:5432"
+    volumes:
+      - v-istsos4-wizard-database-data:/var/lib/postgresql/data
     healthcheck:
       test: pg_isready -U \${POSTGRES_USER} -d \${POSTGRES_DB}
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - istsos4-wizard-net
 
   api:
     image: ghcr.io/istsos/istsos4/api:1.19
+    restart: always
+    container_name: istsos4-wizard-api
+    depends_on:
+      database:
+        condition: service_healthy
     environment:
       HOSTNAME: \${HOSTNAME}
       SUBPATH: \${SUBPATH}
@@ -178,15 +190,22 @@ ${
     ports:
       - \${EXTERNAL_PORT}:5000
     working_dir: /code
+    networks:
+      - istsos4-wizard-net
 
   redis:
     image: redis:7.4.0-alpine3.20
     restart: always
+    container_name: istsos4-wizard-redis
+    volumes:
+      - v-istsos4-wizard-redis-data:/data
+    networks:
+      - istsos4-wizard-net
 
   dummy_data:
-    image: ghcr.io/istsos/istsos4/dummy_data:1.5
-    command: python3 generator.py
-    working_dir: /dummy_data
+    image: ghcr.io/istsos/istsos4/dummy_data:1.9
+    restart: on-failure
+    container_name: istsos4-wizard-dummy-data
     environment:
       HOSTNAME: \${HOSTNAME}
       SUBPATH: \${SUBPATH}
@@ -208,6 +227,23 @@ ${
       AUTHORIZATION: \${AUTHORIZATION}
       NETWORK: \${NETWORK}
       ST_AGGREGATE: \${ST_AGGREGATE}
+    command: python3 generator.py
+    working_dir: /dummy_data
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - istsos4-wizard-net
+
+networks:
+  istsos4-wizard-net:
+    name: istsos4-wizard-net
+
+volumes:
+  v-istsos4-wizard-database-data:
+    name: v-istsos4-wizard-database-data
+  v-istsos4-wizard-redis-data:
+    name: v-istsos4-wizard-redis-data
 `;
   };
 
