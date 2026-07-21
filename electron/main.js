@@ -4,19 +4,25 @@ const isDev = !app.isPackaged;
 
 let mainWindow;
 
+// Handle Linux-specific sandbox issues
+if (process.platform === 'linux') {
+    app.commandLine.appendSwitch('--no-sandbox');
+    app.commandLine.appendSwitch('--disable-dev-shm-usage');
+    app.commandLine.appendSwitch('--disable-gpu-sandbox');
+}
+
 function createWindow() {
 
     mainWindow = new BrowserWindow({
-        width: 1200,
+        width: 1400,
         height: 900,
         minWidth: 800,
         minHeight: 600,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            enableRemoteModule: false,
-            webSecurity: true,
-            preload: path.join(__dirname, 'preload.js')
+            sandbox: false,
+            webSecurity: true
         },
         icon: path.join(__dirname, '../public/logo.png'),
         title: 'istSOS4 Configurator',

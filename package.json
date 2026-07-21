@@ -10,8 +10,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "electron": "electron .",
-    "electron-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && electron .\"",
+    "electron": "electron . --no-sandbox --disable-gpu --disable-dev-shm-usage",
+    "electron-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && electron . --no-sandbox --disable-gpu --disable-dev-shm-usage\"",
     "dist": "npm run build && electron-builder --publish=never",
     "dist:win": "npm run build && electron-builder --win --publish=never",
     "dist:mac": "npm run build && electron-builder --mac --publish=never",
@@ -51,22 +51,36 @@
     "files": [
       "dist/**/*",
       "electron/**/*",
-      "public/logo.jpg"
+      "public/logo.png"
     ],
     "win": {
       "target": "nsis",
-      "icon": "public/logo.jpg",
+      "icon": "public/logo.png",
       "signAndEditExecutable": false
     },
     "mac": {
       "target": "dmg",
-      "icon": "public/logo.jpg",
+      "icon": "public/logo.png",
       "category": "public.app-category.developer-tools"
     },
     "linux": {
-      "target": "AppImage",
-      "icon": "public/logo.jpg",
-      "category": "Development"
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "public/logo.png",
+      "category": "Development",
+      "executableName": "istsos4-configurator"
     },
     "nsis": {
       "oneClick": false,
@@ -81,3 +95,4 @@
     "email": "info@istsos.org"
   }
 }
+
